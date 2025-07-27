@@ -1,18 +1,8 @@
 <x-auth.layout.guest>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6 offset-md-3">
+            <div class="col">
                 <form action="">
-
-
-                <x-auth.form.input
-                        name="name"
-                        label="Name"
-                        placeholder="Enter your name"
-                        prepend='<i class="fa fa-user"></i>'
-                        required
-                        autofocus />
-
 
                     <x-auth.form.input
                         name="username"
@@ -20,6 +10,7 @@
                         placeholder="Enter your username"
                         prepend='<i class="fa fa-user"></i>'
                         required
+                        autofocus
                          />
 
                     <x-auth.form.input
@@ -46,7 +37,7 @@
                         label="Password"
                         type="password"
                         placeholder="Enter your password"
-                        append='<i class="fa fa-lock"></i>'
+                        prepend='<i class="fa fa-lock"></i>'
                         required
                         autocomplete="new-password" />
 

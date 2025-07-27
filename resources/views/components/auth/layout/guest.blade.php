@@ -30,8 +30,8 @@
     }
 </style>
 
-<body style="background-color: #f0f2f5;">
-    <main class="py-4" style="background-color: #ffffff;">
+<body>
+    <main class="py-4">
         {{ $slot }}
     </main>
     <!-- CDN Bootstrap JS -->
