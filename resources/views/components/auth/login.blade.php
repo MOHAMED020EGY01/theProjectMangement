@@ -4,13 +4,32 @@
             <div class="col-md-6 offset-md-3">
                 <form action="">
 
+
+                <x-auth.form.input
+                        name="name"
+                        label="Name"
+                        placeholder="Enter your name"
+                        prepend='<i class="fa fa-user"></i>'
+                        required
+                        autofocus />
+
+
                     <x-auth.form.input
                         name="username"
                         label="Username"
                         placeholder="Enter your username"
                         prepend='<i class="fa fa-user"></i>'
                         required
-                        autofocus />
+                         />
+
+                    <x-auth.form.input
+                        name="email"
+                        type="email"
+                        label="Email"
+                        placeholder="Enter your email"
+                        prepend='<i class="fa fa-envelope"></i>'
+                        required
+                         />
 
                     <x-auth.form.input
                         name="phone"
@@ -32,7 +51,7 @@
                         autocomplete="new-password" />
 
 
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-outline-primary w-100 shadow">Submit</button>
                 </form>
             </div>
         </div>
