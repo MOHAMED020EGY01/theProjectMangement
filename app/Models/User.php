@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'company_id',
     ];
 
     /**
@@ -42,4 +43,31 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function company()
+    {
+        return $this->belongsTo(
+            Company::class,
+            'company_id',
+            'id'
+        );
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(
+            Task::class,
+            'user_id',
+            'id'
+        );
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(
+            Comment::class,
+            'user_id',
+            'id'
+        );
+    }
 }

@@ -10,8 +10,7 @@
                         placeholder="Enter your username"
                         prepend='<i class="fa fa-user"></i>'
                         required
-                        autofocus
-                         />
+                        autofocus />
 
                     <x-auth.form.input
                         name="email"
@@ -19,16 +18,6 @@
                         label="Email"
                         placeholder="Enter your email"
                         prepend='<i class="fa fa-envelope"></i>'
-                        required
-                         />
-
-                    <x-auth.form.input
-                        name="phone"
-                        label="Phone Number"
-                        placeholder="01XXXXXXXXX"
-                        type="tel"
-                        prepend="+20"
-                        append='<i class="fa fa-phone"></i>'
                         required />
 
 
@@ -42,7 +31,7 @@
                         autocomplete="new-password" />
 
 
-                    <button type="submit" class="btn btn-outline-primary w-100 shadow">Submit</button>
+                    <button type="submit" class="btn btn-outline-primary w-100 shadow">login</button>
                 </form>
             </div>
         </div>
