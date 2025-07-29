@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Analytics Overview</title>
+    <title>{{config('app.name')}}</title>
     
     <!-- Bootstrap 5.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -12,10 +12,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Chart.js -->
-    {{ $scriptHead }}
+    {{ $scriptHead ?? '' }}
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('dashboard/assets/css/dashboard.css') }}">
+    {{ $style ?? '' }}
 </head>
 <body>
     <!-- Navigation Sidebar -->
@@ -23,20 +24,20 @@
         <div class="position-sticky pt-3">
             <div class="sidebar-brand d-flex align-items-center px-3 mb-3">
                 <i class="fas fa-chart-line me-2 text-primary"></i>
-                <span class="h5 mb-0">Dashboard</span>
+                <span class="h5 mb-0">{{config('app.name')}}</span>
             </div>
             
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#" data-bs-target="overview">
+                    <a class="nav-link {{ Route::is('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}" >
                         <i class="fas fa-home me-2"></i>
-                        Overview
+                        Dashboard
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" data-bs-target="analytics">
+                    <a class="nav-link {{ Route::is('dashboard.project.index') ? 'active' : '' }}" href="{{ route('dashboard.project.index') }}">
                         <i class="fas fa-chart-bar me-2"></i>
-                        Analytics
+                        Project
                     </a>
                 </li>
                 <li class="nav-item">
@@ -91,7 +92,7 @@
                 <button class="btn btn-outline-secondary d-md-none me-2" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar">
                     <i class="fas fa-bars"></i>
                 </button>
-                <h1 class="h2">{{ $title }}</h1>
+                <h1 class="h2">{{ $title ?? '' }}</h1>
             </div>
             
             <div class="btn-toolbar mb-2 mb-md-0">
@@ -115,6 +116,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <!-- Custom JavaScript -->
-     {{ $scriptFooter }}
+     {{ $scriptFooter ?? '' }}
 </body>
 </html>

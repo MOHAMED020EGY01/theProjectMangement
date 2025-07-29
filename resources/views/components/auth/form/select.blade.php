@@ -4,7 +4,7 @@
     'name' => '',
     'type' => 'text',
     'placeholder' => '',
-    'value' => '',
+    'options' => [],
     'required' => false,
     'autofocus' => false,
     'disabled' => false,
@@ -14,14 +14,15 @@
     'append' => '',
 ])
 
-<div class="mb-3">
+<div class="mb-3 shadow">
     
     <div class="input-group">
         @if($prepend)
             <span class="input-group-text">{!! $prepend !!}</span>
         @endif
-        <select name="{{ $name }}" id="{{ $id }}" class="form-select @error($name) is-invalid @enderror">
-            @foreach ($options as $option)
+        <select class="form-select" name="{{ $name }}" id="{{ $id }}" class="form-select @error($name) is-invalid @enderror">
+        <option disabled selected >Select</option>
+        @foreach ($options as $option)
                 <option value="{{ $option->id }}">{{ $option->name }}</option>
             @endforeach
         </select>

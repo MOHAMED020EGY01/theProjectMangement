@@ -54,6 +54,14 @@
                         required
                         autocomplete="new-password" />
 
+                    <x-auth.form.select
+                        name="company_id"
+                        label="Company"
+                        placeholder="Select a company"
+                        :options="App\Models\Company::pluck('name','id')"
+                        prepend='<i class="fa fa-building"></i>'
+                        required />
+
 
                     <button type="submit" class="btn btn-outline-primary w-100 shadow">Register</button>
                 </form>

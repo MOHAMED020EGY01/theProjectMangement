@@ -18,6 +18,4 @@ Route::get('/', function () {
 });
 
 
-Route::get('/dashboards', function () {
-    return view('dashboard.dashboard');
-})->name('dashboard');
+require __DIR__.'/dashboard/dashboard.php';

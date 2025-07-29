@@ -8,70 +8,11 @@ class Dashboard {
     init() {
         // Initialize dashboard when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
-            this.loadMetrics();
             this.initializeCharts();
-            this.setupEventListeners();
             this.updateTimestamp();
         });
     }
 
-    // Load and display key metrics
-    loadMetrics() {
-        // Simulate API call with loading state
-        const metrics = {
-            totalRevenue: { value: 0, target: 425000 },
-            activeUsers: { value: 0, target: 12580 },
-            conversionRate: { value: 0, target: 73.2 },
-            pendingRequests: { value: 0, target: 18 }
-        };
-
-        // Animate counter for total revenue
-        this.animateCounter('totalRevenue', metrics.totalRevenue.target, '$', ',');
-        
-        // Animate counter for active users
-        this.animateCounter('activeUsers', metrics.activeUsers.target, '', ',');
-        
-        // Animate counter for conversion rate
-        this.animateCounter('conversionRate', metrics.conversionRate.target, '', '', '%');
-        
-        // Update progress bar for conversion rate
-        setTimeout(() => {
-            document.getElementById('conversionProgress').style.width = metrics.conversionRate.target + '%';
-        }, 500);
-        
-        // Animate counter for pending requests
-        this.animateCounter('pendingRequests', metrics.pendingRequests.target);
-    }
-
-    // Animate counter with easing
-    animateCounter(elementId, target, prefix = '', thousands = '', suffix = '') {
-        const element = document.getElementById(elementId);
-        const duration = 2000;
-        const start = performance.now();
-        const startValue = 0;
-
-        const animate = (currentTime) => {
-            const elapsed = currentTime - start;
-            const progress = Math.min(elapsed / duration, 1);
-            
-            // Easing function for smooth animation
-            const easeOut = 1 - Math.pow(1 - progress, 3);
-            const current = Math.floor(startValue + (target - startValue) * easeOut);
-            
-            let formattedValue = current.toString();
-            if (thousands === ',') {
-                formattedValue = current.toLocaleString();
-            }
-            
-            element.textContent = prefix + formattedValue + suffix;
-            
-            if (progress < 1) {
-                requestAnimationFrame(animate);
-            }
-        };
-
-        requestAnimationFrame(animate);
-    }
 
     // Initialize Chart.js charts
     initializeCharts() {
@@ -201,49 +142,6 @@ class Dashboard {
                 return 'status-danger';
         }
     }
-
-    // Setup event listeners
-    setupEventListeners() {
-        // Sidebar navigation
-        document.querySelectorAll('.sidebar .nav-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                
-                // Remove active class from all links
-                document.querySelectorAll('.sidebar .nav-link').forEach(l => {
-                    l.classList.remove('active');
-                });
-                
-                // Add active class to clicked link
-                link.classList.add('active');
-            });
-        });
-
-        // Mobile sidebar toggle
-        const sidebarToggle = document.querySelector('[data-bs-toggle="collapse"]');
-        if (sidebarToggle) {
-            sidebarToggle.addEventListener('click', () => {
-                const sidebar = document.getElementById('sidebar');
-                sidebar.classList.toggle('show');
-            });
-        }
-
-        // Refresh data button (if needed)
-        document.addEventListener('click', (e) => {
-            if (e.target.closest('.btn-primary')) {
-                this.refreshData();
-            }
-        });
-
-        // Window resize handler for charts
-        window.addEventListener('resize', () => {
-            Object.values(this.charts).forEach(chart => {
-                chart.resize();
-            });
-        });
-    }
-
-
 
     // Refresh dashboard data
     refreshData() {

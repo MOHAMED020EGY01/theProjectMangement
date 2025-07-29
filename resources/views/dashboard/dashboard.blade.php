@@ -3,6 +3,7 @@
         <script src="{{ asset('https://cdn.jsdelivr.net/npm/chart.js') }}"></script>
     </x-slot>
 
+
     <x-slot name="title">
         <h1 class="h2">Dashboard Overview</h1>
     </x-slot>
@@ -152,7 +153,7 @@
             </div>
         </div>
 
-        
+
         <x-slot name="scriptFooter">
             <script src="{{ asset('dashboard/assets/js/dashboard.js') }}"></script>
         </x-slot>
