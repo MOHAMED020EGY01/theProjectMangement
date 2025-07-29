@@ -19,6 +19,11 @@ class Project extends Model
         'status',
     ];
 
+
+    protected $casts = [
+        'deadline' => 'datetime:Y-m-d',
+    ];
+    
     const STATUS = [
         'pending'=>'Pending',
         'in_progress'=>'In Progress',

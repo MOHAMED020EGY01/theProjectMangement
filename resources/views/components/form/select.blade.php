@@ -5,6 +5,7 @@
 'type' => 'text',
 'placeholder' => '',
 'options' => [],
+'oldvalue' => '',
 'required' => false,
 'autofocus' => false,
 'disabled' => false,
@@ -23,7 +24,7 @@
         <select class="form-select" name="{{ $name }}" id="{{ $id }}" class="form-select @error($name) is-invalid @enderror">
             <option disabled selected>Select</option>
             @foreach ($options as $key => $value)
-            <option value="{{ $key }}">{{ $value }}</option>
+            <option value="{{ $key }}" {{ $oldvalue == $key ? 'selected' : '' }}>{{ $value }}</option>
             @endforeach
         </select>
 

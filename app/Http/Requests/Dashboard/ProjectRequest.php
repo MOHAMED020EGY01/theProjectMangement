@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Dashboard;
 
+use App\Models\Project;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ProjectRequest extends FormRequest
 {
@@ -27,7 +29,7 @@ class ProjectRequest extends FormRequest
             'deadline'=>'required',
             'company_id'=>'required|exists:companies,id',
             'user_id'=>'required|exists:users,id',
-            'status'=>'required|in:pending,in_progress,completed',
+            'status' => ['required', Rule::in(array_keys(Project::STATUS))],
         ];
     }
 }

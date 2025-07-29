@@ -3,12 +3,12 @@
         <h1 class="h2">Projects</h1>
     </x-slot>
 
-    <x-flash-message/>
+    <x-flash-message />
 
     <div class="d-flex mb-3">
         <a href="{{ route('dashboard.project.create') }}" class="btn btn-primary">Create Project</a>
     </div>
-    
+
     <table class="table table-striped table-hover">
         <thead>
             <tr>
@@ -24,9 +24,9 @@
         </thead>
         <tbody>
             @if ($projects->isEmpty())
-                <tr>
-                    <td colspan="8" class="text-center">No projects found.</td>
-                </tr>
+            <tr>
+                <td colspan="8" class="text-center">No projects found.</td>
+            </tr>
             @endif
             @foreach ($projects as $project)
             <tr class="hover:bg-gray-100" style="table-layout: fixed;">
@@ -39,10 +39,12 @@
                 <td>{{ $project->deadline }}</td>
                 <td>
                     <a href="{{ route('dashboard.project.edit', $project->id) }}"><i class="fa-solid fa-pen-to-square"></i></a>
-                    <form action="{{ route('dashboard.project.destroy', $project->id) }}" method="POST" class="d-inline">
+                    <form action="{{ route('dashboard.project.destroy', $project->id) }}" method="POST" class="d-inline delete-form">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="text-danger" style="outline: none; border: none;"><i class="fa-solid fa-trash"></i></button>
+                        <button type="button" class="btn-delete text-danger" style="border: none; background: transparent;">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
                     </form>
                 </td>
             </tr>
@@ -51,5 +53,29 @@
     </table>
 
 
+    <x-slot name="scriptFooter">
 
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelectorAll('.btn-delete').forEach(button => {
+                    button.addEventListener('click', function() {
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: "You won't be able to revert this!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#d33',
+                            cancelButtonColor: '#3085d6',
+                            confirmButtonText: 'Yes, delete it!'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                this.closest('form').submit();
+                            }
+                        })
+                    });
+                });
+            });
+        </script>
+    </x-slot>
 </x-dashboard.layout>
