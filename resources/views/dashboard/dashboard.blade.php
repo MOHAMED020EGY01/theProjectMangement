@@ -1,4 +1,4 @@
-<x-dashboard.layout.layout>
+<x-dashboard.layout>
     <x-slot name="scriptHead">
         <script src="{{ asset('https://cdn.jsdelivr.net/npm/chart.js') }}"></script>
     </x-slot>
@@ -157,4 +157,4 @@
         <x-slot name="scriptFooter">
             <script src="{{ asset('dashboard/assets/js/dashboard.js') }}"></script>
         </x-slot>
-</x-dashboard.layout.layout>
+</x-dashboard.layout>

@@ -2,8 +2,9 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col">
-                <form action="">
-                    <x-auth.form.input
+                <form action="{{ route('register') }}" method="POST">
+                    @csrf
+                    <x-form.input
                         name="name"
                         label="name"
                         placeholder="Enter your name"
@@ -11,14 +12,14 @@
                         required
                         autofocus />
 
-                    <x-auth.form.input
+                    <x-form.input
                         name="username"
                         label="Username"
                         placeholder="Enter your username"
                         prepend='<i class="fa fa-user"></i>'
                         required />
 
-                    <x-auth.form.input
+                    <x-form.input
                         name="email"
                         type="email"
                         label="Email"
@@ -26,7 +27,7 @@
                         prepend='<i class="fa fa-envelope"></i>'
                         required />
 
-                    <x-auth.form.input
+                    <x-form.input
                         name="phone"
                         label="Phone Number"
                         placeholder="01XXXXXXXXX"
@@ -36,7 +37,7 @@
                         required />
 
 
-                    <x-auth.form.input
+                    <x-form.input
                         name="password"
                         label="Password"
                         type="password"
@@ -45,7 +46,7 @@
                         required
                         autocomplete="new-password" />
 
-                    <x-auth.form.input
+                    <x-form.input
                         name="password_confirmation"
                         label="Confirm Password"
                         type="password"
@@ -54,7 +55,7 @@
                         required
                         autocomplete="new-password" />
 
-                    <x-auth.form.select
+                    <x-form.select
                         name="company_id"
                         label="Company"
                         placeholder="Select a company"

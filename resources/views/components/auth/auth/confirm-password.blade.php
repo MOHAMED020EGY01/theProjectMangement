@@ -9,7 +9,7 @@
                 <form method="POST" action="{{-- route('password.confirm') --}}">
                     @csrf
 
-                    <x-auth.form.input
+                    <x-form.input
                         name="password"
                         label="Password"
                         type="password"

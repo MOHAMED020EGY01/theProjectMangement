@@ -2,33 +2,27 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col">
-                <form action="">
+                <form action="{{ route('login') }}" method="POST">
+                    @csrf
 
-                    <x-auth.form.input
-                        name="username"
-                        label="Username"
-                        placeholder="Enter your username"
-                        prepend='<i class="fa fa-user"></i>'
-                        required
-                        autofocus />
-
-                    <x-auth.form.input
+                    <x-form.input
                         name="email"
                         type="email"
                         label="Email"
                         placeholder="Enter your email"
                         prepend='<i class="fa fa-envelope"></i>'
+                        autofocus
                         required />
 
 
-                    <x-auth.form.input
+                    <x-form.input
                         name="password"
                         label="Password"
                         type="password"
                         placeholder="Enter your password"
                         prepend='<i class="fa fa-lock"></i>'
-                        required
-                        autocomplete="new-password" />
+                        autocomplete="new-password"
+                        required />
 
 
                     <button type="submit" class="btn btn-outline-primary w-100 shadow">login</button>

@@ -15,7 +15,7 @@
                 <form method="POST" action="{{-- route('password.email') --}}">
                     @csrf
 
-                    <x-auth.form.input
+                    <x-form.input
                         name="email"
                         type="email"
                         label="Email"

@@ -13,15 +13,18 @@ class ProjectController extends Controller
     private $companies;
     private $users;
 
+    private $status;
+
     public function __construct()
     {
         $this->middleware('auth');
         $this->companies = Company::pluck('name','id');
         $this->users = User::pluck('name','id');
+        $this->status = Project::STATUS;
     }
 
     public function index(){
-        $projects = Project::select('id','name','description','deadline','company_id','user_id')
+        $projects = Project::select('id','name','status','description','deadline','company_id','user_id')
         ->with('company:id,name','user:id,name')
         ->paginate(7);
         return view('dashboard.project.index',
@@ -38,7 +41,7 @@ class ProjectController extends Controller
         [
             'project'=>$project,
             'companies'=>$this->companies,
-            'users'=>$this->users
+            'users'=>$this->users,
         ]);
     }
 
@@ -46,7 +49,8 @@ class ProjectController extends Controller
         return view('dashboard.project.create',
         [
             'companies'=>$this->companies,
-            'users'=>$this->users
+            'users'=>$this->users,
+            'status'=> $this->status
         ]);
     }
 
@@ -62,7 +66,8 @@ class ProjectController extends Controller
         [
             'project'=>$project,
             'companies'=>$this->companies,
-            'users'=>$this->users
+            'users'=>$this->users,
+            'status'=>$this->status
         ]);
     }
 

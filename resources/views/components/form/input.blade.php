@@ -41,7 +41,7 @@
     </div>
 
     @error($name)
-        <div class="invalid-feedback">
+        <div class="text-danger" style="font-size: 13px;">
             {{ $message }}
         </div>
     @enderror

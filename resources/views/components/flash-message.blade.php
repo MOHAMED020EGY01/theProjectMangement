@@ -1,21 +1,67 @@
+<style>
+.toast-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+    overflow: hidden;
+    min-width: 250px;
+}
+.toast-message.hide {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.toast-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.7);
+    width: 100%;
+    animation: toastProgress 3s linear forwards;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+@keyframes toastProgress {
+    from { width: 100%; }
+    to { width: 0%; }
+}
+</style>
+
+
+
+
 @if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
+    <div class="toast-message">
+        <i class="fa fa-check-circle m-2"></i>{{ session('success') }}
+        <div class="toast-progress"></div>
     </div>
 @endif
 @if (session('warning'))
-    <div class="alert alert-warning">
-        {{ session('warning') }}
+    <div class="toast-message">
+        <i class="fa fa-exclamation-circle m-2"></i>{{ session('warning') }}
+        <div class="toast-progress"></div>
     </div>
 @endif
 @if (session('info'))
-    <div class="alert alert-info">
-        {{ session('info') }}
+    <div class="toast-message">
+        <i class="fa fa-info-circle m-2"></i>{{ session('info') }}
+        <div class="toast-progress"></div>
     </div>
 @endif
 @if (session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
+    <div class="toast-message">
+        <i class="fa fa-exclamation-circle m-2"></i>{{ session('error') }}
+        <div class="toast-progress"></div>
     </div>
 @endif
 
@@ -24,20 +70,15 @@
 
 
 <script>
-    // لما الصفحة تخلص تحميل
-    document.addEventListener('DOMContentLoaded', function () {
-        const flash = document.getElementsByClassName('alert');
-        if (flash) {
-            // بعد 3 ثواني (3000 ميلي ثانية) يخفي الرسالة
-            setTimeout(() => {
-                flash.style.transition = 'opacity 0.5s ease';
-                flash.style.opacity = '0';
-
-                // بعد ما يختفي تدريجيًا، نشيله من الـ DOM
+    window.addEventListener('DOMContentLoaded', () => {
+        const toasts = document.getElementsByClassName('toast-message');
+        if (toasts.length > 0) {
+            Array.from(toasts).forEach(toast => {
                 setTimeout(() => {
-                    flash.remove();
-                }, 500);
-            }, 3000);
+                    toast.classList.add('hide');
+                }, 3000);
+            });
         }
     });
 </script>
+

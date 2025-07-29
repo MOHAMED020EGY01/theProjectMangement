@@ -19,6 +19,12 @@ class Project extends Model
         'status',
     ];
 
+    const STATUS = [
+        'pending'=>'Pending',
+        'in_progress'=>'In Progress',
+        'completed'=>'Completed',
+    ];
+
     public function company()
     {
         return $this->belongsTo(

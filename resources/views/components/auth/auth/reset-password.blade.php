@@ -15,7 +15,7 @@
 
                     <input type="hidden" name="token" value="{{-- $request->route('token') --}}">
 
-                    <x-auth.form.input
+                    <x-form.input
                         name="email"
                         type="email"
                         label="Email"
@@ -25,7 +25,7 @@
                         required
                         autofocus />
 
-                    <x-auth.form.input
+                    <x-form.input
                         name="password"
                         label="New Password"
                         type="password"
@@ -34,7 +34,7 @@
                         required
                         autocomplete="new-password" />
 
-                    <x-auth.form.input
+                    <x-form.input
                         name="password_confirmation"
                         label="Confirm Password"
                         type="password"
