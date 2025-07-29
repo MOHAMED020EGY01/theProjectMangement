@@ -16,6 +16,14 @@ class Task extends Model
         'user_id',
         'due_date',
     ];
+    const STATUS = [
+        'pending' => 'Pending',
+        'in_progress' => 'In Progress',
+        'completed' => 'Completed',
+    ];
+    protected $casts = [
+        'due_date' => 'datetime:Y-m-d',
+    ];
 
 
     public function project()

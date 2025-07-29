@@ -50,6 +50,7 @@
         </tbody>
     </table>
 
+    {{ $projects->withQueryString()->links() }}
 
     <x-slot name="scriptFooter">
 

@@ -65,18 +65,21 @@
     <div class="toast-progress"></div>
 </div>
 @endif
+
 @if (session('warning'))
-<div class="toast-message bg-danger">
+<div class="toast-message bg-danger" style="background-color: rgb(red, green, blue);">
     <i class="fa fa-exclamation-circle m-2"></i>{{ session('warning') }}
     <div class="toast-progress"></div>
 </div>
 @endif
+
 @if (session('info'))
 <div class="toast-message bg-info">
     <i class="fa fa-info-circle m-2"></i>{{ session('info') }}
     <div class="toast-progress"></div>
 </div>
 @endif
+
 @if (session('error'))
 <div class="toast-message bg-danger">
     <i class="fa fa-exclamation-circle m-2"></i>{{ session('error') }}
