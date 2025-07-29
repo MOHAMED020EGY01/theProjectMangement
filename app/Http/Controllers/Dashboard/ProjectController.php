@@ -60,6 +60,8 @@ class ProjectController extends Controller
                 'project' => $project,
                 'companies' => $this->companies,
                 'users' => $this->users,
+                'now' => \Carbon\Carbon::now(),
+                'deadline' => $project->deadline,
             ]
         );
     }

@@ -59,7 +59,7 @@
                     label="deadline" 
                     name="deadline" 
                     placeholder="Enter project deadline"
-                    :value="$project->deadline" 
+                    :value="$project->deadline->format('Y-m-d')" 
                     required 
 
                 />

@@ -14,7 +14,6 @@
             <tr>
                 <th>#</th>
                 <th>Name</th>
-                <th>Description</th>
                 <th>Status</th>
                 <th>Company</th>
                 <th>User</th>
@@ -32,11 +31,10 @@
             <tr class="hover:bg-gray-100" style="table-layout: fixed;">
                 <td>{{ $loop->iteration }}</td>
                 <td><a href="{{ route('dashboard.project.show', $project->id) }}">{{ $project->name }}</a></td>
-                <td>{{ $project->description }}</td>
                 <td>{{ $project->status }}</td>
                 <td>{{ $project->company->name }}</td>
                 <td>{{ $project->user->name }}</td>
-                <td>{{ $project->deadline }}</td>
+                <td>{{ $project->deadline->format('Y-m-d') }}</td>
                 <td>
                     <a href="{{ route('dashboard.project.edit', $project->id) }}"><i class="fa-solid fa-pen-to-square"></i></a>
                     <form action="{{ route('dashboard.project.destroy', $project->id) }}" method="POST" class="d-inline delete-form">
