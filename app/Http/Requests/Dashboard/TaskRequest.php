@@ -20,13 +20,14 @@ class TaskRequest extends FormRequest
      */
     public function rules(): array
     {
+      
         return [
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'project_id' => 'required|exists:projects,id',
             'user_id' => 'required|exists:users,id',
             'status' => ['required', \Illuminate\Validation\Rule::in(array_keys(\App\Models\Task::STATUS))],
-            'due_date' => 'required|date',
+            'due_date' => 'required',
         ];
     }
 }

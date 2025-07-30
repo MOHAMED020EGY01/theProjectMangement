@@ -19,7 +19,7 @@ class Task extends Model
     const STATUS = [
         'pending' => 'Pending',
         'in_progress' => 'In Progress',
-        'completed' => 'Completed',
+        'done' => 'Done',
     ];
     protected $casts = [
         'due_date' => 'datetime:Y-m-d',

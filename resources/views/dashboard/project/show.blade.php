@@ -25,6 +25,9 @@
                     <div class="col-md-6">
                         <strong>Assigned User:</strong> {{ $project->user->name ?? 'N/A' }}
                     </div>
+                    <div class="col-md-6">
+                        <strong><a style="color: #007bff; text-decoration: none;" href="{{ route('dashboard.project.tasks.index', $project->id) }}">Tasks:</a></strong> {{ $project->tasks->count() }}
+                    </div>
                 </div>
 
                 <div class="row mb-3">
