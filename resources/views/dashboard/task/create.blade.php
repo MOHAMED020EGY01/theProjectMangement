@@ -1,6 +1,6 @@
 <x-dashboard.layout>
     <x-slot name="title">
-        <h1 class="h2">Create Project</h1>
+        <h1 class="h2">Create Task</h1>
     </x-slot>
 
     <div class="container">
@@ -68,7 +68,7 @@
                 />
             </div>
         </div>
-        <button type="submit" class="btn btn-outline-success w-100 shadow mt-3">Create Project</button>
+        <button type="submit" class="btn btn-outline-success w-100 shadow mt-3">Create Task</button>
     </form>
 </div>
 </x-dashboard.layout>

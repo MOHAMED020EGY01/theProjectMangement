@@ -13,11 +13,5 @@ new Chart("PinChart", {
       data: yValues
     }]
   },
-  options: {
-    legend: {display: false},
-    title: {
-      display: true,
-      text: "Tasks hello wolrd"
-    }
-  }
 });
+

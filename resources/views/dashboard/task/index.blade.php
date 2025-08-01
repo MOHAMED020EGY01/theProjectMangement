@@ -10,7 +10,6 @@
         <x-flash-message />
 
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="h5"><strong>Name Project: </strong>{{ $tasks->first()->project->name }}</h2>
             <a href="{{ route('dashboard.project.tasks.create', $project_id) }}" class="btn btn-primary">
                 <i class="bi bi-plus-circle me-1"></i> Create Task
             </a>

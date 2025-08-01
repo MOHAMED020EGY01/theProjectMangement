@@ -48,5 +48,95 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Start Comment Section -->
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h4>Comments</h4>
+                </div>
+                <div class="card-body">
+                    <!-- Flash Message -->
+                    @if (session('success'))
+                    <div class="alert alert-success">{{ session('success') }}</div>
+                    @endif
+
+
+                    <div id="comment-success" class="alert alert-success d-none"></div>
+                    <!-- Comment Form -->
+                    <form id="comment-form" action="{{ route('tasks.comments.store', $task->id) }}" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="content" class="form-label">Add a Comment:</label>
+                            <textarea name="content" id="comment-content" class="form-control" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Comment</button>
+                    </form>
+
+
+                    <!-- Existing Comments -->
+                    <hr>
+                    <h6 class="mb-3">Previous Comments</h6>
+
+                    <div id="comment-list">
+                        @forelse ($task->comments as $comment)
+                        <div class="border rounded p-2 mb-2">
+                            <strong>{{ $comment->user->name }}</strong>
+                            <span class="text-muted small">{{ $comment->created_at->diffForHumans() }}</span>
+                            <p class="mb-0">{{ $comment->content }}</p>
+                        </div>
+                        @empty
+                        <p class="text-muted">No comments yet.</p>
+                        @endforelse
+                    </div>
+
+                </div>
+            </div>
+            <!-- End Comment Section -->
+
         </div>
+        <x-slot name="scriptFooter">
+            <script>
+                function setupCommentForm() {
+                    $('#comment-form').one('submit', function(e) {
+                        e.preventDefault();
+
+                        const $form = $(this);
+                        const $button = $form.find('button[type="submit"]');
+
+                        $button.prop('disabled', true).html(`
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Commenting...
+                        `);
+
+                        $.ajax({
+                            url: $form.attr('action'),
+                            method: 'POST',
+                            data: $form.serialize(),
+                            success: function(response) {
+                                $('#comment-success')
+                                    .text('Comment added successfully.')
+                                    .removeClass('d-none');
+
+                                $('#comment-list').prepend(`
+                        <div class="border rounded p-2 mb-2">
+                            <strong>${response.user_name}</strong>
+                            <span class="text-muted small">just now</span>
+                            <p class="mb-0">${response.content}</p>
+                        </div>
+                    `);
+
+                                $('#comment-content').val('');
+                            },
+                            error: function() {
+                                alert('Failed to submit comment');
+                            },
+                            complete: function() {
+                                $button.prop('disabled', false).text('Comment');
+                                setupCommentForm();
+                            }
+                        });
+                    });
+                }
+                setupCommentForm();
+            </script>
+        </x-slot>
 </x-dashboard.layout>

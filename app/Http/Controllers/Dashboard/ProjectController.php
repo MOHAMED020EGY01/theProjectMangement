@@ -53,6 +53,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
+        $chart= DB::select("SELECT status , count(*) as count FROM tasks where project_id = $project->id GROUP BY status");
         $project->load('company:id,name', 'user:id,name');
         return view(
             'dashboard.project.show',
@@ -62,6 +63,7 @@ class ProjectController extends Controller
                 'users' => $this->users,
                 'now' => \Carbon\Carbon::now(),
                 'deadline' => $project->deadline,
+                'chart' => $chart,
             ]
         );
     }

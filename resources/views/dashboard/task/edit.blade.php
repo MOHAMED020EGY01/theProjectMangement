@@ -71,7 +71,7 @@
                 />
             </div>
         </div>
-        <button type="submit" class="btn btn-outline-success w-100 shadow mt-3">Create Project</button>
+        <button type="submit" class="btn btn-outline-primary w-100 shadow mt-3">Update Project</button>
     </form>
 </div>
 </x-dashboard.layout>

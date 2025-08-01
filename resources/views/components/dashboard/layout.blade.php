@@ -39,9 +39,15 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Route::is('dashboard.project.index') ? 'active' : '' }}" href="{{ route('dashboard.project.index') }}">
+                    <a id="project-link" class="nav-link {{ Route::is('dashboard.project.index') ? 'active' : '' }}" href="{{ route('dashboard.project.index') }}">
                         <i class="fas fa-chart-bar me-2"></i>
                         Project
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('chat.index') }}" data-bs-target="Chat">
+                        <i class="fas fa-comments me-2"></i>
+                        Chat
                     </a>
                 </li>
                 <li class="nav-item">
@@ -87,7 +93,20 @@
             </div>
         </div>
     </nav>
-
+<div id="spinner" style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255,255,255,0.6);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+" class="d-none">
+        <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
+    </div>
     <!-- Main Content -->
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <!-- Top Navigation Bar -->
@@ -98,20 +117,37 @@
                 </button>
                 <h1 class="h2">{{ $title ?? '' }}</h1>
             </div>
+            <div class="d-flex align-items-center gap-3">
 
-            <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    {{ Auth::user()->name }} 
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
-                    <li><a class="dropdown-item" href="#">Settings</a></li>
-                    <li><a class="dropdown-item" href="#" onclick="document.getElementById('logout-form').submit();"> logout</a></li>
-                    <form action="{{ route('logout') }}" method="POST" id="logout-form">
-                        @csrf
-                    </form>
-                </ul>
+                {{-- إشعارات المهمات --}}
+                <x-dashboard.notifications.task />
+
+                {{-- قائمة المستخدم --}}
+                <div class="dropdown">
+                    <button class="btn btn-light border rounded-pill px-3 d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-user-circle fa-lg text-primary"></i>
+                        <span class="fw-semibold">{{ Auth::user()->name }}</span>
+                    </button>
+
+                    <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                        <li><a class="dropdown-item d-flex align-items-center gap-2" href="#"><i class="fa-solid fa-user"></i> Profile</a></li>
+                        <li><a class="dropdown-item d-flex align-items-center gap-2" href="#"><i class="fa-solid fa-cog"></i> Settings</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item text-danger d-flex align-items-center gap-2" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <i class="fa-solid fa-right-from-bracket"></i> Logout
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+
             </div>
+
 
         </div>
         {{ $slot }}
@@ -121,6 +157,18 @@
     <!-- Bootstrap 5.3 JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        $(function() {
+            // أي رابط عنده class show-spinner هيعرض الـ spinner
+            $('body').on('click', 'a', function() {
+                $('#spinner').removeClass('d-none');
+            });
+        });
+        window.addEventListener("pageshow", function(event) {
+            $('#spinner').addClass('d-none'); // أخفي السبنر لما الصفحة تظهر تاني
+        });
+    </script>
     <!-- Custom JavaScript -->
     {{ $scriptFooter ?? '' }}
 </body>

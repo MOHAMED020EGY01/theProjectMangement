@@ -55,4 +55,15 @@ class Project extends Model
             'id'
         );
     }
+
+    //method Accessor
+    public function getProgressPercentageAttribute()
+    {
+        $totalTasks = $this->tasks()->count();
+        if ($totalTasks == 0) return 0;
+
+        $completedTasks = $this->tasks()->where('status', 'done')->count();
+    return round(($completedTasks / $totalTasks) * 100);
+}
+
 }

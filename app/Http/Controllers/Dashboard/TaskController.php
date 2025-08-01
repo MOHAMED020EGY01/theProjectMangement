@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\TaskRequest;
 use App\Models\Task;
+use App\Notifications\TaskAssigned;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -70,6 +71,10 @@ class TaskController extends Controller
         try {
             DB::beginTransaction();
             Task::create($request->validated());
+
+            $user = \App\Models\User::find($request->user_id);
+            $user->notify(new TaskAssigned(Task::latest()->first()));
+
             DB::commit();
             return redirect()
             ->route('dashboard.project.tasks.index', $project_id)
