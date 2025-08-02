@@ -160,13 +160,13 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
         $(function() {
-            // أي رابط عنده class show-spinner هيعرض الـ spinner
+
             $('body').on('click', 'a', function() {
                 $('#spinner').removeClass('d-none');
             });
         });
         window.addEventListener("pageshow", function(event) {
-            $('#spinner').addClass('d-none'); // أخفي السبنر لما الصفحة تظهر تاني
+            $('#spinner').addClass('d-none');
         });
     </script>
     <!-- Custom JavaScript -->

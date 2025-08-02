@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Project;
 
 class DashboardController extends Controller
 {
@@ -12,9 +13,11 @@ class DashboardController extends Controller
         $this->middleware('auth');
     }
     public function index(){
+        $projects = Project::where('status','!=','completed')->where('deadline','>=',now()->subDays(2))->get();
         $chart = DB::select("SELECT status , count(*) as count FROM projects GROUP BY status");
         return view('dashboard.dashboard',[
             'chart'=>$chart,
+            'projects'=>$projects,
         ]);
     }
 }
