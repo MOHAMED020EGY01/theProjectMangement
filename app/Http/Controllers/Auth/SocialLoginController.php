@@ -22,7 +22,6 @@ class SocialLoginController extends Controller
         
         $user = User::where('provider_id', $user_provider->id)
         ->where('provider', $providers)
-        ->where('email', $user_provider->email)
         ->first();
 
         if($user){

@@ -29,8 +29,8 @@
         max-width: 600px;
     }
 </style>
-{{ $style }}
-{{ $scriptHead }}
+{{ $style ?? "" }}
+{{ $scriptHead ?? "" }}
 <body>
     <main class="py-4">
         {{ $slot }}
