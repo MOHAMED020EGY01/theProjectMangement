@@ -24,8 +24,18 @@
                         autocomplete="new-password"
                         required />
 
-
-                    <button type="submit" class="btn btn-outline-primary w-100 shadow">login</button>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-outline-primary w-100 shadow">login</button>
+                            </div>
+                            <div class="col-md-6">
+                                <a href="{{ route('register') }}" class="btn btn-outline-success w-100 shadow">register</a>
+                            </div>
+                            <hr class="my-4">
+                            <div class="col-md-12">
+                                <a href="{{ route('auth.redirect', 'google') }}" class="btn btn-outline-danger w-100 shadow">Google</a>
+                            </div>
+                        </div>
                 </form>
             </div>
         </div>

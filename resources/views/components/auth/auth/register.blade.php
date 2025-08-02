@@ -63,6 +63,8 @@
                         prepend='<i class="fa fa-building"></i>'
                         required />
 
+                    <hr>
+
 
                     <button type="submit" class="btn btn-outline-primary w-100 shadow">Register</button>
                 </form>

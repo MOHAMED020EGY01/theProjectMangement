@@ -35,7 +35,7 @@
                 <h5>Users</h5>
                 <ul class="list-group" id="userList">
                     @foreach($users as $user)
-                    <li class="list-group-item user-item" data-id="{{ $user->id }}">
+                    <li class="list-group-item user-item " data-id="{{ $user->id }}">
                         {{ $user->name }}
                     </li>
                     @endforeach
@@ -80,6 +80,8 @@
 
             // عند الضغط على مستخدم
             $('.user-item').on('click', function() {
+                $('.user-item').removeClass('active');
+                $(this).addClass('active');
                 selectedUserId = $(this).data('id');
                 loadMessages();
             });

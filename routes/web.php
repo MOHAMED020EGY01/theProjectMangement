@@ -19,3 +19,4 @@ Route::get('/', function () {
 
 
 require __DIR__.'/dashboard/dashboard.php';
+require __DIR__.'/auth/socialLogin.php';
