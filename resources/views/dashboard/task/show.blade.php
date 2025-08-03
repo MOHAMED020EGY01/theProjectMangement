@@ -122,6 +122,8 @@
                             <span class="text-muted small">just now</span>
                             <p class="mb-0">${response.content}</p>
                         </div>
+                        <a class="edit-btn" data-id="${response.id}">Edit</a>
+                        <a class="delete-btn" data-id="${response.id}">Delete</a>
                     `);
 
                                 $('#comment-content').val('');

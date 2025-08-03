@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use App\Models\Task;
 use App\Notifications\CommentAssigned;
 use Illuminate\Http\Request;
@@ -16,7 +17,6 @@ class CommentController extends Controller
             'content' => 'required|string|max:1000',
         ]);
     
-        // حماية من السبامر: نفس المستخدم كتب لنفس المهمة آخر 3 ثواني؟
         $recentComment = $task->comments()
             ->where('user_id', auth()->id())
             ->where('created_at', '>=', now()->subSeconds(3))
@@ -40,5 +40,4 @@ class CommentController extends Controller
             'user_name' => $comment->user->name,
         ]);
     }
-    
 }

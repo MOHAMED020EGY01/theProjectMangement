@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Dashboard\CommentController;
+use App\Http\Controllers\Dashboard\CompanyController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\ProjectController;
 use App\Http\Controllers\Dashboard\TaskController;
@@ -11,8 +12,10 @@ Route::get('/dashboards', [DashboardController::class, 'index'])->name('dashboar
 
 Route::group([
     'prefix' => 'dashboard',
-    'as' => 'dashboard.'
+    'as' => 'dashboard.',
+    'middleware'=>'password.confirm'
 ], function () {
+    Route::resource('company',CompanyController::class);
     /**
      * Project Routes
      */
@@ -23,7 +26,8 @@ Route::group([
      */
     Route::group([
         'prefix' => 'project',
-        'as' => 'project.'
+        'as' => 'project.',
+        
     ], function () {
         Route::delete('{project_id}/tasks/{task_id}/destroy', [TaskController::class, 'destroy'])->name('tasks.destroy');
         Route::patch('{project_id}/tasks/{task_id}/update', [TaskController::class, 'update'])->name('tasks.update');
@@ -45,5 +49,4 @@ Route::group([
 ],function(){
     Route::post('{task}/comments', [CommentController::class, 'store'])->name('comments.store');
 });
-// Route::resource('companies',CompanyController::class);
 require __DIR__ . '/chat.php';

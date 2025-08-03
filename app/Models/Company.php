@@ -9,6 +9,13 @@ class Company extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'logo',
+    ];
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d',
+    ];
     public function users()
     {
         return $this->hasMany(

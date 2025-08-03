@@ -53,6 +53,17 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
+    //     $projects = DB::select("SELECT * FROM projects WHERE status != 'completed'");
+    //     $tasks = DB::select("
+    //     SELECT tasks.* 
+    //     FROM tasks
+    //     JOIN projects ON tasks.project_id = projects.id
+    //     WHERE projects.status != 'completed'
+    //     AND tasks.status != 'completed'
+    // ");
+    
+    //     dd($projects , $tasks);
+        
         $chart= DB::select("SELECT status , count(*) as count FROM tasks where project_id = $project->id GROUP BY status");
         $project->load('company:id,name', 'user:id,name');
         return view(

@@ -4,8 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="user-id" content="{{ auth()->id() }}">
     <title>{{config('app.name')}}</title>
 
+    <!---------------- CSS Link  --------------->
+    <!-- animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Bootstrap 5.3 CSS -->
@@ -13,16 +18,28 @@
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Chart.js -->
-    {{ $scriptHead ?? '' }}
-
+    
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('dashboard/assets/css/dashboard.css') }}">
     {{ $style ?? '' }}
+    <!---------------- JS Link  --------------->
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
+    <!-- Pusher brodcast -->
+    <script>
+        const userId = "{{ Auth::id() }}";
+    </script>
+    @vite('resources/js/app.js')
+
+    <!-- Chart.js -->
+    {{ $scriptHead ?? '' }}
 </head>
 
 <body>
+    <div style="z-index: 9999;" id="notificationLayout" class="position-fixed top-0 start-0 p-3 ">
+       
+    </div>
     <!-- Navigation Sidebar -->
     <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
         <div class="position-sticky pt-3">
@@ -45,15 +62,15 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('chat.index') }}" data-bs-target="Chat">
+                    <a class="nav-link {{ Route::is('dashboard.chat.index') ? 'active' : '' }}" href="{{ route('chat.index') }}" data-bs-target="Chat">
                         <i class="fas fa-comments me-2"></i>
                         Chat
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" data-bs-target="reports">
-                        <i class="fas fa-file-alt me-2"></i>
-                        Reports
+                    <a class="nav-link {{ Route::is('dashboard.company.index') ? 'active' : '' }}" href="{{ route('dashboard.company.index') }}" data-bs-target="company">
+                        <i class="fas fa-building me-2"></i>
+                        Company
                     </a>
                 </li>
                 <li class="nav-item">
@@ -157,7 +174,7 @@
     <!-- Bootstrap 5.3 JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- spiner -->
     <script>
         $(function() {
 
@@ -169,6 +186,7 @@
             $('#spinner').addClass('d-none');
         });
     </script>
+
     <!-- Custom JavaScript -->
     {{ $scriptFooter ?? '' }}
 </body>

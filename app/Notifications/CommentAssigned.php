@@ -4,6 +4,7 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -28,17 +29,31 @@ class CommentAssigned extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['database'];
+        return ['database','broadcast'];
     }
     public function toDatabase($notifiable)
     {
         return [
-            'comment_id' => $this->comment->id,
-            'comment_body' => $this->comment->body,
-            'task_id' => $this->comment->task->id,
-            'task_title' => $this->comment->task->title,
-            'commented_by' => $this->comment->user->name,
+            'title' => 'Comment Alert',
+            'body' => [
+                'name' => $this->comment->user->name,
+                'deadline' => $this->comment->task->project->deadline->format('Y-m-d'),
+                'message' => "Fast to Solve this Project",
+            ],
+            'url' => route('dashboard.project.tasks.show', [$this->comment->task->project->id,$this->comment->task->id]),
         ];
+    }
+    public function toBroadcast($notifiable)
+    {
+        return new BroadcastMessage([
+            'title' => 'Comment Alert',
+            'body' => [
+                'name' => $this->comment->user->name,
+                'deadline' => $this->comment->task->project->deadline->format('Y-m-d'),
+                'message' => "Fast to Solve this Project",
+            ],
+            'url' => route('dashboard.project.tasks.show', [$this->comment->task->project->id,$this->comment->task->id]),
+        ]);
     }
 
     /**
@@ -60,7 +75,13 @@ class CommentAssigned extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            //
+            'title' => 'Comment Alert',
+            'body' => [
+                'name' => $this->comment->user->name,
+                'deadline' => $this->comment->task->project->deadline->format('Y-m-d'),
+                'message' => "Fast to Solve this Project",
+            ],
+            'url' => route('dashboard.project.tasks.show', [$this->comment->task->project->id,$this->comment->task->id]),
         ];
     }
 }
