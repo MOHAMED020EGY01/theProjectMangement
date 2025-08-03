@@ -5,6 +5,7 @@ namespace App\Notifications;
 use App\Models\Task;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -28,7 +29,7 @@ class TaskAssigned extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['database'];
+        return ['database','broadcast'];
     }
 
 
@@ -40,11 +41,26 @@ class TaskAssigned extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'title' => 'New Task Assigned',
-            'task_id' => $this->task->id,
-            'task_title' => $this->task->title,
-            'assigned_by' => auth()->user()->name,
+            'title' => 'Task Alert',
+            'body' => [
+                'name' => $this->task->user->name,
+                'deadline' => $this->task->project->deadline->format('Y-m-d'),
+                'message' => $this->task->title,
+            ],
+            'url' => route('dashboard.project.tasks.show', [$this->task->project->id,$this->task->id]),
         ];
+    }
+    public function toBroadcast()
+    {
+        return new BroadcastMessage([
+            'title' => 'Task Alert',
+            'body' => [
+                'name' => $this->task->user->name,
+                'deadline' => $this->task->project->deadline->format('Y-m-d'),
+                'message' => $this->task->title,
+            ],
+            'url' => route('dashboard.project.tasks.show', [$this->task->project->id,$this->task->id]),
+        ]);
     }
     /**
      * Get the mail representation of the notification.
@@ -65,7 +81,13 @@ class TaskAssigned extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            //
+            'title' => 'Task Alert',
+            'body' => [
+                'name' => $this->task->user->name,
+                'deadline' => $this->task->project->deadline->format('Y-m-d'),
+                'message' => $this->task->title,
+            ],
+            'url' => route('dashboard.project.tasks.show', [$this->task->project->id,$this->task->id]),
         ];
     }
 }

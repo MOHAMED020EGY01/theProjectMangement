@@ -38,20 +38,23 @@ class CommentAssigned extends Notification
             'body' => [
                 'name' => $this->comment->user->name,
                 'deadline' => $this->comment->task->project->deadline->format('Y-m-d'),
-                'message' => "Fast to Solve this Project",
+                'message' => $this->comment->content,
             ],
+            'id'=>$this->comment->id,
             'url' => route('dashboard.project.tasks.show', [$this->comment->task->project->id,$this->comment->task->id]),
         ];
     }
-    public function toBroadcast($notifiable)
+    public function toBroadcast()
     {
         return new BroadcastMessage([
             'title' => 'Comment Alert',
             'body' => [
                 'name' => $this->comment->user->name,
                 'deadline' => $this->comment->task->project->deadline->format('Y-m-d'),
-                'message' => "Fast to Solve this Project",
+                'message' =>  $this->comment->content,
+                
             ],
+            'comment_id'=>$this->comment->id,
             'url' => route('dashboard.project.tasks.show', [$this->comment->task->project->id,$this->comment->task->id]),
         ]);
     }
@@ -81,6 +84,7 @@ class CommentAssigned extends Notification
                 'deadline' => $this->comment->task->project->deadline->format('Y-m-d'),
                 'message' => "Fast to Solve this Project",
             ],
+            'id'=>$this->comment->id,
             'url' => route('dashboard.project.tasks.show', [$this->comment->task->project->id,$this->comment->task->id]),
         ];
     }

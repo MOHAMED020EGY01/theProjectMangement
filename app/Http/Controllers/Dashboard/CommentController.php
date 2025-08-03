@@ -32,12 +32,13 @@ class CommentController extends Controller
             'user_id' => auth()->id(),
             'content' => $request->content,
         ]);
-        
+        $comment_id = $comment->id;
         $task->user->notify(new CommentAssigned($comment));
     
         return response()->json([
             'content' => $comment->content,
             'user_name' => $comment->user->name,
+            'comment_id' => $comment_id,
         ]);
     }
 }

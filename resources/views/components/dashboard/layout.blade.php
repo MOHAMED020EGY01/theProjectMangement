@@ -18,14 +18,14 @@
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('dashboard/assets/css/dashboard.css') }}">
     {{ $style ?? '' }}
     <!---------------- JS Link  --------------->
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    
+
     <!-- Pusher brodcast -->
     <script>
         const userId = "{{ Auth::id() }}";
@@ -38,7 +38,7 @@
 
 <body>
     <div style="z-index: 9999;" id="notificationLayout" class="position-fixed top-0 start-0 p-3 ">
-       
+
     </div>
     <!-- Navigation Sidebar -->
     <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
@@ -110,7 +110,7 @@
             </div>
         </div>
     </nav>
-<div id="spinner" style="
+    <div id="spinner" style="
     position: fixed;
     top: 0;
     left: 0;
@@ -179,6 +179,12 @@
         $(function() {
 
             $('body').on('click', 'a', function() {
+                const href = $(this).attr('href');
+
+
+                if (href && href.includes('#')) {
+                    return;
+                }
                 $('#spinner').removeClass('d-none');
             });
         });

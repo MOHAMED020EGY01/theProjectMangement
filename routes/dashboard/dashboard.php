@@ -3,13 +3,14 @@
 use App\Http\Controllers\Dashboard\CommentController;
 use App\Http\Controllers\Dashboard\CompanyController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\NotificationController;
 use App\Http\Controllers\Dashboard\ProjectController;
 use App\Http\Controllers\Dashboard\TaskController;
 use Illuminate\Support\Facades\Route;
 
 
 Route::get('/dashboards', [DashboardController::class, 'index'])->name('dashboard');
-
+Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
 Route::group([
     'prefix' => 'dashboard',
     'as' => 'dashboard.',
@@ -47,6 +48,6 @@ Route::group([
     'prefix'=>'tasks',
     'as'=>'tasks.'
 ],function(){
-    Route::post('{task}/comments', [CommentController::class, 'store'])->name('comments.store');
+    Route::any('{task}/comments', [CommentController::class, 'store'])->name('comments.store');
 });
 require __DIR__ . '/chat.php';

@@ -2,6 +2,18 @@
     <x-slot name="title">
         <h1 class="h2">Show Task <strong>{{ $task->project->name }}</strong></h1>
     </x-slot>
+    <x-slot name="style">
+    <style>
+    .highlighted-comment {
+        background-color: #e8f7ff; 
+        border: 2px solid #0bbcd7;
+        box-shadow: 0 0 12px rgba(11, 188, 215, 0.5);
+        border-radius: 8px;
+        transition: all 0.8s ease;
+    }
+</style>
+
+    </x-slot>
 
     <div class="container py-4">
         <div class="card">
@@ -79,7 +91,8 @@
 
                     <div id="comment-list">
                         @forelse ($task->comments as $comment)
-                        <div class="border rounded p-2 mb-2">
+
+                        <div id="comment-{{ $comment->id }}" class="border rounded p-2 mb-2">
                             <strong>{{ $comment->user->name }}</strong>
                             <span class="text-muted small">{{ $comment->created_at->diffForHumans() }}</span>
                             <p class="mb-0">{{ $comment->content }}</p>
@@ -112,24 +125,28 @@
                             method: 'POST',
                             data: $form.serialize(),
                             success: function(response) {
+                                console.log(response);
+                                console.log(response.comment_id);
+                                
                                 $('#comment-success')
                                     .text('Comment added successfully.')
                                     .removeClass('d-none');
 
                                 $('#comment-list').prepend(`
-                        <div class="border rounded p-2 mb-2">
+                        <div id="comment-${response.comment_id}" class="border rounded p-2 mb-2">
                             <strong>${response.user_name}</strong>
                             <span class="text-muted small">just now</span>
                             <p class="mb-0">${response.content}</p>
                         </div>
-                        <a class="edit-btn" data-id="${response.id}">Edit</a>
-                        <a class="delete-btn" data-id="${response.id}">Delete</a>
                     `);
 
                                 $('#comment-content').val('');
                             },
-                            error: function() {
-                                alert('Failed to submit comment');
+                            error: function(xhr, status, error) {
+                                console.log('Error submitting comment:', error);
+                                console.log('status submitting comment:', status);
+                                console.log('xhr submitting comment:', xhr);
+                                alert('Failed to submit comment ' + error);
                             },
                             complete: function() {
                                 $button.prop('disabled', false).text('Comment');
@@ -140,5 +157,30 @@
                 }
                 setupCommentForm();
             </script>
+
+            <script>
+                $(document).ready(function() {
+                    const hash = window.location.hash;
+                    
+
+                    if (hash.startsWith("#comment-")) {
+                        const $target = $(hash);
+
+                        
+                        if ($target.length) {
+                            $('html, body').animate({
+                                scrollTop: $target.offset().top - 100 
+                            }, 500);
+                        
+                            $target.addClass('highlighted-comment');
+
+                            setTimeout(() => {
+                                $target.removeClass('highlighted-comment');
+                            }, 3000);
+                        }
+                    }
+                });
+            </script>
+
         </x-slot>
 </x-dashboard.layout>

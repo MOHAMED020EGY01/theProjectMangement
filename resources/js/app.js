@@ -5,12 +5,12 @@ window.Echo.private(`App.Models.User.${userId}`).notification((data) => {
             <div class="d-flex justify-content-between align-items-start mb-3">
                 <div>
                     <h5 class="text-primary fw-bold mb-1">${data.title}</h5>
-                    <small class="text-muted">${data.body.name}</small>
+                    <small class="text-muted"><strong>Name: </strong>${data.body.name}</small>
                 </div>
-                <a href="${data.url}" class="btn btn-sm btn-outline-primary">View</a>
+                <a href="${data.url}?notification_id=${data.comment_id}#comment-${data.comment_id}" class="btn btn-sm btn-outline-primary">View</a>
             </div>
             <p class="mb-1"><strong>Deadline:</strong> ${data.body.deadline}</p>
-            <p class="text-dark">${data.body.message}</p>
+            <p class="text-dark"><strong>Message:</strong> ${data.body.message}</p>
     
             <!-- Progress Bar -->
             <div class="progress mt-3" style="height: 6px; border-radius: 3px;">
@@ -32,9 +32,11 @@ window.Echo.private(`App.Models.User.${userId}`).notification((data) => {
     <li class="mb-2">
             <div class="card border-0 shadow-sm">
                 <div class="card-body p-2">
-                    <div class="fw-bold text-primary">${data.title}</div>
-                    <div class="text-muted small">${data.body.name}</div>
-                    <div class="text-muted small">${data.body.deadline}</div>
+                    <div class="fw-bold text-primary"><strong>Title: </strong>${data.title}</div>
+                    <div class="text-muted small"><strong>Name: </strong>${data.body.name}</div>
+                    <div class="text-muted small"><strong>Deadline: </strong>${data.body.deadline}</div>
+                    <div class="text-muted small"><strong>Message: </strong>${data.body.message}</div>
+                    <a href="${data.url}?notification_id=${data.comment_id}#comment-${data.comment_id}"><strong>view</strong></a>
                     <div class="text-muted small">Broadcast</div>
                 </div>
             </div>
