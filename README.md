@@ -1,9 +1,99 @@
-<h1 align="center">Hi 👋, I'm mohamed</h1>
-<h3 align="center">A passionate Full-Stack developer from Egypt</h3>
+# 🧠 Project Management System for Teams
 
-<h3 align="left">Connect with me:</h3>
-<p align="left">
-</p>
+> A modern and collaborative platform for managing projects, tasks, and teams — built with Laravel.
 
-<h3 align="left">Languages and Tools:</h3>
-<p align="left"> <a href="https://developer.android.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/android/android-original-wordmark.svg" alt="android" width="40" height="40"/> </a> <a href="https://www.cprogramming.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg" alt="c" width="40" height="40"/> </a> <a href="https://www.w3schools.com/cpp/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/cplusplus/cplusplus-original.svg" alt="cplusplus" width="40" height="40"/> </a> <a href="https://www.w3schools.com/cs/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg" alt="csharp" width="40" height="40"/> </a> <a href="https://www.w3schools.com/css/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="css3" width="40" height="40"/> </a> <a href="https://git-scm.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="40" height="40"/> </a> <a href="https://www.w3.org/html/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="html5" width="40" height="40"/> </a> <a href="https://www.java.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="java" width="40" height="40"/> </a> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="40" height="40"/> </a> <a href="https://www.linux.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" alt="linux" width="40" height="40"/> </a> <a href="https://www.php.net" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/php/php-original.svg" alt="php" width="40" height="40"/> </a> <a href="https://www.python.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="python" width="40" height="40"/> </a> <a href="https://reactnative.dev/" target="_blank" rel="noreferrer"> <img src="https://reactnative.dev/img/header_logo.svg" alt="reactnative" width="40" height="40"/> </a> <a href="https://tailwindcss.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg" alt="tailwind" width="40" height="40"/> </a> <a href="https://www.typescriptlang.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg" alt="typescript" width="40" height="40"/> </a> <a href="https://unity.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/unity3d/unity3d-icon.svg" alt="unity" width="40" height="40"/> </a> <a href="https://unrealengine.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/kenangundogan/fontisto/036b7eca71aab1bef8e6a0518f7329f13ed62f6b/icons/svg/brand/unreal-engine.svg" alt="unreal" width="40" height="40"/> </a> </p>
+---
+
+## 📌 Overview
+
+This is a full-featured **project management system** tailored for teams in business environments. It enables **task assignment**, **progress tracking**, **team collaboration**, and **company organization** in one centralized workspace.
+
+---
+
+## 🚀 Core Features
+
+### 👥 User Management
+- Secure authentication (Laravel Fortify)
+- Role-based access control
+- Social login (Google, GitHub, etc.)
+- User profiles and team roles
+
+### 📁 Project & Task Management
+- Create and manage projects and tasks
+- Assign tasks to team members
+- Monitor task/project progress
+- File attachments for tasks
+
+### 💬 Team Collaboration
+- Real-time in-app chat
+- Threaded task comments
+- Instant notifications (Pusher / Laravel Echo)
+- Internal messaging support
+
+### 🏢 Company & Teams
+- Manage company profiles
+- Organize users into teams/departments
+- Department-level access and roles
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer       | Technology                              |
+|-------------|------------------------------------------|
+| Backend     | Laravel  10.x                            |
+| Database    | MySQL                                    |
+| Auth        | Laravel Fortify, Laravel Socialite       |
+| Real-time   | Laravel Echo + Pusher / Socket.io        |
+| Frontend    | Blade, bootstribe CSS, Alpine.js         |
+| Icons       | font Awsson                              |
+| Dev Tools   | Composer, NPM, Git                       |
+
+---
+
+## 📁 Project Structure
+
+```plaintext
+app/
+├── Http/Controllers/      → Business logic controllers
+│   ├── Auth/              → Login & registration
+│   └── Dashboard/         → Main app logic
+├── Models/                → Eloquent data models
+├── Notifications/         → App notifications
+├── View/Components/       → Blade UI components
+├── Events/ & Listeners/   → Event-driven architecture
+
+routes/
+├── web.php                → Public & dashboard routes
+├── api.php                → API endpoints
+├── dashboard/             → Internal dashboard routes
+
+resources/
+├── views/                 → Blade templates
+├── components/            → Shared UI elements
+└── js/                    → Frontend interactivity
+
+```
+
+## Architecture & Patterns
+- **MVC Architecture**: Follows Laravel's MVC pattern
+- **Component-Based UI**: Utilizes Blade components for reusable UI elements
+- **Repository Pattern**: Data access layer abstraction
+- **Service Layer**: Business logic encapsulation
+
+## Key Observations
+1. The application follows Laravel's conventions and best practices
+2. Implements a clean separation of concerns between business logic and presentation
+3. Uses Laravel's built-in notification system for user alerts
+4. Features real-time updates for chat and notifications
+5. Responsive design for cross-device compatibility
+
+## Dependencies
+- Laravel Fortify (Authentication)
+- Laravel Socialite (Social login)
+- Pusher (WebSockets)
+- Intervention Image (Image handling)
+- Laravel Debugbar (Development)
+
+---
+*Last Updated: 2025-08-03*
