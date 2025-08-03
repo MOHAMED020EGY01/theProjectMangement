@@ -7,7 +7,7 @@ window.Echo.private(`App.Models.User.${userId}`).notification((data) => {
                     <h5 class="text-primary fw-bold mb-1">${data.title}</h5>
                     <small class="text-muted"><strong>Name: </strong>${data.body.name}</small>
                 </div>
-                <a href="${data.url}?notification_id=${data.comment_id}#comment-${data.comment_id}" class="btn btn-sm btn-outline-primary">View</a>
+                <a href="${data.url}?notification_id=${data.Alert_id}#comment-${data.Alert_id}" class="btn btn-sm btn-outline-primary">View</a>
             </div>
             <p class="mb-1"><strong>Deadline:</strong> ${data.body.deadline}</p>
             <p class="text-dark"><strong>Message:</strong> ${data.body.message}</p>
@@ -36,7 +36,7 @@ window.Echo.private(`App.Models.User.${userId}`).notification((data) => {
                     <div class="text-muted small"><strong>Name: </strong>${data.body.name}</div>
                     <div class="text-muted small"><strong>Deadline: </strong>${data.body.deadline}</div>
                     <div class="text-muted small"><strong>Message: </strong>${data.body.message}</div>
-                    <a href="${data.url}?notification_id=${data.comment_id}#comment-${data.comment_id}"><strong>view</strong></a>
+                    <a href="${data.url}?notification_id=${data.Alert_id}#comment-${data.Alert_id}"><strong>view</strong></a>
                     <div class="text-muted small">Broadcast</div>
                 </div>
             </div>

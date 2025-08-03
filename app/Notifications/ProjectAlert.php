@@ -42,6 +42,7 @@ class ProjectAlert extends Notification
                 'deadline' => $this->project->deadline->format('Y-m-d'),
                 'message' => "Fast to Solve this Project",
             ],
+            'id'=>$this->project->id,
             'url' => route('dashboard.project.show', $this->project->id),
         ];
     }
@@ -55,6 +56,7 @@ class ProjectAlert extends Notification
                 'deadline' => $this->project->deadline->format('Y-m-d'),
                 'message' => "Fast to Solve this Project",
             ],
+            'Alert_id'=>$this->project->id,
             'url' => route('dashboard.project.show', $this->project->id),
         ]);
     }

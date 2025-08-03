@@ -54,7 +54,7 @@ class CommentAssigned extends Notification
                 'message' =>  $this->comment->content,
                 
             ],
-            'comment_id'=>$this->comment->id,
+            'Alert_id'=>$this->comment->id,
             'url' => route('dashboard.project.tasks.show', [$this->comment->task->project->id,$this->comment->task->id]),
         ]);
     }

@@ -24,13 +24,13 @@
                     <div class="text-muted small"><strong>Name: </strong>{{ $notification->data['body']['name'] }}</div>
                     <div class="text-muted small"><strong>Deadline: </strong>{{ $notification->data['body']['deadline'] }}</div>
                     <div class="text-muted small"><strong>Message: </strong>{{ $notification->data['body']['message'] }}</div>
-                    <a href="{{ $notification->data['url'] }}"><strong>view</strong></a>
+                    <a href="{{ $notification->data['url'] }}?notification_id={{ $notification->id }}"><strong>view</strong></a>
                     <div class="text-muted small">{{ $notification->created_at->diffForHumans() }}</div>
                 </div>
             </div>
         </li>
         @endif
-        <!---------       CommentAssigned --   Notifications   --------------->
+        <!---------       CommentAssigned --   Notifications    DONE   --------------->
         @if ($notification->type == 'App\Notifications\CommentAssigned')
         <li class="mb-2">
             <div class="card border-0 shadow-sm">
@@ -53,7 +53,7 @@
                     <div class="fw-bold text-primary"><strong>Title: </strong>{{ $notification->data['title'] }}</div>
                     <div class="text-muted small"><strong>Name: </strong>{{ $notification->data['body']['name'] }}</div>
                     <div class="text-muted small"><strong>Deadline: </strong>{{ $notification->data['body']['deadline'] }}</div>
-                    <a href="{{ $notification->data['url'] }}"><strong>view</strong></a>
+                    <a href="{{ $notification->data['url'] }}?notification_id={{ $notification->id }}"><strong>view</strong></a>
                     <div class="text-muted small">{{ $notification->created_at->diffForHumans() }}</div>
                 </div>
             </div>

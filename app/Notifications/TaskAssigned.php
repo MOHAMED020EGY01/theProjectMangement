@@ -47,6 +47,7 @@ class TaskAssigned extends Notification
                 'deadline' => $this->task->project->deadline->format('Y-m-d'),
                 'message' => $this->task->title,
             ],
+            'id'=>$this->task->id,
             'url' => route('dashboard.project.tasks.show', [$this->task->project->id,$this->task->id]),
         ];
     }
@@ -59,6 +60,7 @@ class TaskAssigned extends Notification
                 'deadline' => $this->task->project->deadline->format('Y-m-d'),
                 'message' => $this->task->title,
             ],
+            'Alert_id'=>$this->task->id,
             'url' => route('dashboard.project.tasks.show', [$this->task->project->id,$this->task->id]),
         ]);
     }
