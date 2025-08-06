@@ -6,19 +6,11 @@
     <div class="container py-5">
         <div class="card shadow-lg rounded-4 border-0">
             <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center rounded-top-4">
-                <h3 class="mb-0"><i class="fas fa-bell m-2"></i> All Notifications</h3>
+                <h3 class="mb-0"><i class="fas fa-bell m-2"></i> All Notifications Read</h3>
             </div>
             <div>
-                <a href="{{ route('notifications.trach') }}" class="btn btn-outline-secondary shadow m-2"><i class="fas fa-trash"></i> Trach</a>
-                <a href="{{ route('notifications.unread') }}" class="btn btn-outline-success shadow m-2"><i class="fas fa-envelope"></i> Unread</a>
-                <a href="{{ route('notifications.read') }}" class="btn btn-outline-primary shadow m-2"><i class="fas fa-eye"></i> Read</a>
-                <a href="#" onclick="document.getElementById('notificationDeleteAll').submit();" class="btn btn-outline-danger shadow m-2"><i class="fas fa-trash"></i> Delete All</a>
-                <form id="notificationDeleteAll" action="{{ route('notifications.DeleteAll') }}" method="post">
-                    @csrf
-                    @method('DELETE')
-                </form>
+                <a href="{{ route('notifications.index') }}" class="btn btn-outline-primary shadow m-2"><i class="fas fa-bell"></i> All Notifications</a>
             </div>
-
             <div class="card-body">
                 <div class="list-group">
                 {{ $notifications->withQueryString()->links() }}

@@ -93,7 +93,7 @@
                         @forelse ($task->comments as $comment)
 
                         <div id="comment-{{ $comment->id }}" class="border rounded p-2 mb-2">
-                            <strong>{{ $comment->user->name }}</strong>
+                            <strong> <bdi> {{ $comment->user->name }}</bdi></strong>
                             <span class="text-muted small">{{ $comment->created_at->diffForHumans() }}</span>
                             <p class="mb-0">{{ $comment->content }}</p>
                         </div>
@@ -109,60 +109,64 @@
         </div>
         <x-slot name="scriptFooter">
             <script>
-                function setupCommentForm() {
-                    $('#comment-form').one('submit', function(e) {
+                $(function(){
+                    $('#comment-form').on('submit', function(e) {
                         e.preventDefault();
-
+    
                         const $form = $(this);
                         const $button = $form.find('button[type="submit"]');
-
+    
                         $button.prop('disabled', true).html(`
                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Commenting...
                         `);
-
+    
                         $.ajax({
                             url: $form.attr('action'),
                             method: 'POST',
                             data: $form.serialize(),
+                            beforeSend: function() {
+                                const content = new URLSearchParams($form.serialize()).get('content');
+                                if (content.trim() === '') {
+                                    alert('Comment cannot be empty!');
+                                    $button.prop('disabled', false).html('Comment');
+                                    return false;
+                                }
+                            },
                             success: function(response) {
-                                console.log(response);
-                                console.log(response.comment_id);
                                 
                                 $('#comment-success')
                                     .text('Comment added successfully.')
                                     .removeClass('d-none');
-
+    
                                 $('#comment-list').prepend(`
-                        <div id="comment-${response.comment_id}" class="border rounded p-2 mb-2">
-                            <strong>${response.user_name}</strong>
-                            <span class="text-muted small">just now</span>
-                            <p class="mb-0">${response.content}</p>
-                        </div>
-                    `);
-
+                                    <div id="comment-${response.comment_id}" class="border rounded p-2 mb-2">
+                                        <strong><bdi>${response.user_name}</bdi></strong>
+                                        <span class="text-muted small">just now</span>
+                                        <p class="mb-0">${response.content}</p>
+                                    </div>
+                                `);
+    
                                 $('#comment-content').val('');
                             },
+    
                             error: function(xhr, status, error) {
-                                console.log('Error submitting comment:', error);
-                                console.log('status submitting comment:', status);
-                                console.log('xhr submitting comment:', xhr);
                                 alert('Failed to submit comment ' + error);
                             },
                             complete: function() {
                                 $button.prop('disabled', false).text('Comment');
-                                setupCommentForm();
+                                
                             }
                         });
                     });
-                }
-                setupCommentForm();
+                });
+                
+
             </script>
 
             <script>
                 $(document).ready(function() {
                     const hash = window.location.hash;
                     
-
                     if (hash.startsWith("#comment-")) {
                         const $target = $(hash);
 

@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Notifications;
+namespace App\Notifications\Task;
 
-use App\Models\Task;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class TaskAssigned extends Notification
+class CommentAssigned extends Notification
 {
     use Queueable;
 
-    public $task;
+    public $comment;
     /**
      * Create a new notification instance.
      */
-    public function __construct(Task $task)
+    public function __construct($comment)
     {
-        $this->task = $task;
+        $this->comment = $comment;
+
     }
 
     /**
@@ -31,39 +31,34 @@ class TaskAssigned extends Notification
     {
         return ['database','broadcast'];
     }
-
-
-    /**
-     * Summary of toDatabase
-     * @param mixed $notifiable
-     * @return array{assigned_by: mixed, task_id: mixed, task_name: mixed, title: string}
-     */
     public function toDatabase($notifiable)
     {
         return [
-            'title' => 'Task Alert',
+            'title' => 'Comment Alert',
             'body' => [
-                'name' => $this->task->user->name,
-                'deadline' => $this->task->project->deadline->format('Y-m-d'),
-                'message' => $this->task->title,
+                'name' => $this->comment->user->name,
+                'deadline' => $this->comment->task->project->deadline->format('Y-m-d'),
+                'message' => $this->comment->content,
             ],
-            'id'=>$this->task->id,
-            'url' => route('dashboard.project.tasks.show', [$this->task->project->id,$this->task->id]),
+            'id'=>$this->comment->id,
+            'url' => route('dashboard.project.tasks.show', [$this->comment->task->project->id,$this->comment->task->id]),
         ];
     }
     public function toBroadcast()
     {
         return new BroadcastMessage([
-            'title' => 'Task Alert',
+            'title' => 'Comment Alert',
             'body' => [
-                'name' => $this->task->user->name,
-                'deadline' => $this->task->project->deadline->format('Y-m-d'),
-                'message' => $this->task->title,
+                'name' => $this->comment->user->name,
+                'deadline' => $this->comment->task->project->deadline->format('Y-m-d'),
+                'message' =>  $this->comment->content,
+                
             ],
-            'Alert_id'=>$this->task->id,
-            'url' => route('dashboard.project.tasks.show', [$this->task->project->id,$this->task->id]),
+            'Alert_id'=>$this->comment->id,
+            'url' => route('dashboard.project.tasks.show', [$this->comment->task->project->id,$this->comment->task->id]),
         ]);
     }
+
     /**
      * Get the mail representation of the notification.
      */
@@ -83,13 +78,14 @@ class TaskAssigned extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'title' => 'Task Alert',
+            'title' => 'Comment Alert',
             'body' => [
-                'name' => $this->task->user->name,
-                'deadline' => $this->task->project->deadline->format('Y-m-d'),
-                'message' => $this->task->title,
+                'name' => $this->comment->user->name,
+                'deadline' => $this->comment->task->project->deadline->format('Y-m-d'),
+                'message' => "Fast to Solve this Project",
             ],
-            'url' => route('dashboard.project.tasks.show', [$this->task->project->id,$this->task->id]),
+            'id'=>$this->comment->id,
+            'url' => route('dashboard.project.tasks.show', [$this->comment->task->project->id,$this->comment->task->id]),
         ];
     }
 }

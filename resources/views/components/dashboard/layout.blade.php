@@ -37,7 +37,7 @@
 </head>
 
 <body>
-    <div style="z-index: 9999;" id="notificationLayout" class="position-fixed top-0 start-0 p-3 ">
+    <div style="z-index: 9999;position: fixed; top: 4rem; right: 10px;" id="notificationLayout" class="p-3">
 
     </div>
     <!-- Navigation Sidebar -->
@@ -74,7 +74,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" data-bs-target="users">
+                    <a class="nav-link" href="{{ route('user.index') }}" data-bs-target="users">
                         <i class="fas fa-users me-2"></i>
                         Users
                     </a>
@@ -147,7 +147,7 @@
                     </button>
 
                     <ul class="dropdown-menu dropdown-menu-end shadow-sm">
-                        <li><a class="dropdown-item d-flex align-items-center gap-2" href="#"><i class="fa-solid fa-user"></i> Profile</a></li>
+                        <li><a class="dropdown-item d-flex align-items-center gap-2" href="{{ route('profile.index') }}"><i class="fa-solid fa-user"></i> Profile</a></li>
                         <li><a class="dropdown-item d-flex align-items-center gap-2" href="#"><i class="fa-solid fa-cog"></i> Settings</a></li>
                         <li>
                             <hr class="dropdown-divider">
@@ -177,19 +177,21 @@
     <!-- spiner -->
     <script>
         $(function() {
-
             $('body').on('click', 'a', function() {
                 const href = $(this).attr('href');
-
 
                 if (href && href.includes('#')) {
                     return;
                 }
+
                 $('#spinner').removeClass('d-none');
             });
         });
-        window.addEventListener("pageshow", function(event) {
+        $(window).on('pageshow', function(event) {
             $('#spinner').addClass('d-none');
+        });
+        $(window).on('beforeunload', function() {
+            $('#spinner').removeClass('d-none');
         });
     </script>
 

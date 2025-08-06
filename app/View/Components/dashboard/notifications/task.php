@@ -4,14 +4,18 @@ namespace App\View\Components\dashboard\notifications;
 
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
 
 class task extends Component
 {
    public $notifications;
+   public $count;
     public function __construct()
     {
-        $this->notifications = auth()->user()->unreadNotifications;
+        $user = Auth::user();
+        $this->count = $user->unreadNotifications()->count();
+        $this->notifications = $user->unreadNotifications()->paginate(7);
     }
 
     /**

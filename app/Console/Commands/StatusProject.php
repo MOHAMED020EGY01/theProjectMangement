@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Project;
-use App\Notifications\ProjectAlert;
+use App\Notifications\Project\ProjectAlert;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 

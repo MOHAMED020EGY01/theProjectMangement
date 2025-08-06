@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Task;
-use App\Notifications\CommentAssigned;
+use App\Notifications\Task\CommentAssigned;
 use Illuminate\Http\Request;
 
 

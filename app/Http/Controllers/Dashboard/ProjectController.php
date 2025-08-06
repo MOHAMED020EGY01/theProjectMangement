@@ -7,6 +7,9 @@ use App\Http\Requests\Dashboard\ProjectRequest;
 use App\Models\Company;
 use App\Models\Project;
 use App\Models\User;
+use App\Notifications\Project\ProjectCreated;
+use App\Notifications\Project\ProjectDeleted;
+use App\Notifications\Project\ProjectUpdated;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -53,16 +56,16 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        $projects = DB::select("SELECT * FROM projects WHERE status != 'completed'");
-        $tasks = DB::select("
-        SELECT tasks.* 
-        FROM tasks
-        JOIN projects ON tasks.project_id = projects.id
-        WHERE projects.status != 'completed'
-        AND tasks.status != 'completed'
-    ");
+    //     $projects = DB::select("SELECT * FROM projects WHERE status != 'completed'");
+    //     $tasks = DB::select("
+    //     SELECT tasks.* 
+    //     FROM tasks
+    //     JOIN projects ON tasks.project_id = projects.id
+    //     WHERE projects.status != 'completed'
+    //     AND tasks.status != 'completed'
+    // ");
     
-        dd($projects , $tasks);
+    //     dd($projects , $tasks);
         
         $chart= DB::select("SELECT status , count(*) as count FROM tasks where project_id = $project->id GROUP BY status");
         $project->load('company:id,name', 'user:id,name');
@@ -108,9 +111,11 @@ class ProjectController extends Controller
 
             Project::create($request->validated());
             DB::commit();
+            $project = Project::latest()->first();
+            $project->user->notify(new ProjectCreated($project));
 
             return redirect()->route('dashboard.project.index')
-                ->with('success', 'Project created successfully');
+            ->with('success', 'Project created successfully');
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Project creation failed: ' . $e->getMessage());
@@ -146,6 +151,7 @@ class ProjectController extends Controller
 
             $project->update($request->validated());
             DB::commit();
+            $project->user->notify(new ProjectUpdated($project));
 
             return redirect()->route('dashboard.project.index')
                 ->with('info', 'Project updated successfully');
@@ -167,10 +173,9 @@ class ProjectController extends Controller
     {
         try {
             DB::beginTransaction();
-
+            $project->user->notify(new ProjectDeleted($project));
             $project->delete();
             DB::commit();
-
             return redirect()->route('dashboard.project.index')
                 ->with('warning', 'Project deleted successfully');
         } catch (\Exception $e) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Notifications;
+namespace App\Notifications\Project;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -8,18 +8,17 @@ use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class CommentAssigned extends Notification
+class ProjectDeleted extends Notification
 {
     use Queueable;
 
-    public $comment;
+    public $project;
     /**
      * Create a new notification instance.
      */
-    public function __construct($comment)
+    public function __construct($project)
     {
-        $this->comment = $comment;
-
+        $this->project = $project;
     }
 
     /**
@@ -34,28 +33,22 @@ class CommentAssigned extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'title' => 'Comment Alert',
+            'title' => 'Project Deleted',
             'body' => [
-                'name' => $this->comment->user->name,
-                'deadline' => $this->comment->task->project->deadline->format('Y-m-d'),
-                'message' => $this->comment->content,
+                'name' => $this->project->name,
             ],
-            'id'=>$this->comment->id,
-            'url' => route('dashboard.project.tasks.show', [$this->comment->task->project->id,$this->comment->task->id]),
+            'url' => route('dashboard.project.index'),
         ];
     }
     public function toBroadcast()
     {
         return new BroadcastMessage([
-            'title' => 'Comment Alert',
+            'title' => 'Project Deleted',
             'body' => [
-                'name' => $this->comment->user->name,
-                'deadline' => $this->comment->task->project->deadline->format('Y-m-d'),
-                'message' =>  $this->comment->content,
-                
+                'name' => $this->project->user->name,
             ],
-            'Alert_id'=>$this->comment->id,
-            'url' => route('dashboard.project.tasks.show', [$this->comment->task->project->id,$this->comment->task->id]),
+            'Alert_id' => $this->project->id,
+            'url' => route('dashboard.project.index'),
         ]);
     }
 
@@ -78,14 +71,11 @@ class CommentAssigned extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'title' => 'Comment Alert',
+            'title' => 'Project Deleted',
             'body' => [
-                'name' => $this->comment->user->name,
-                'deadline' => $this->comment->task->project->deadline->format('Y-m-d'),
-                'message' => "Fast to Solve this Project",
+                'name' => $this->project->user->name,
             ],
-            'id'=>$this->comment->id,
-            'url' => route('dashboard.project.tasks.show', [$this->comment->task->project->id,$this->comment->task->id]),
+            'url' => route('dashboard.project.index'),
         ];
     }
 }

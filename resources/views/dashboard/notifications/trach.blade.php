@@ -9,16 +9,14 @@
                 <h3 class="mb-0"><i class="fas fa-bell m-2"></i> All Notifications</h3>
             </div>
             <div>
-                <a href="{{ route('notifications.trach') }}" class="btn btn-outline-secondary shadow m-2"><i class="fas fa-trash"></i> Trach</a>
-                <a href="{{ route('notifications.unread') }}" class="btn btn-outline-success shadow m-2"><i class="fas fa-envelope"></i> Unread</a>
-                <a href="{{ route('notifications.read') }}" class="btn btn-outline-primary shadow m-2"><i class="fas fa-eye"></i> Read</a>
-                <a href="#" onclick="document.getElementById('notificationDeleteAll').submit();" class="btn btn-outline-danger shadow m-2"><i class="fas fa-trash"></i> Delete All</a>
-                <form id="notificationDeleteAll" action="{{ route('notifications.DeleteAll') }}" method="post">
+                <a href="{{ route('notifications.index') }}" class="btn btn-outline-primary shadow m-2"><i class="fas fa-bell"></i> All Notifications</a>
+                <a href="#" onclick="document.getElementById('forceDeleteAllForm').submit();" class="btn btn-outline-danger shadow m-2"><i class="fas fa-trash"></i> Force Delete All</a>
+                
+                <form action="{{ route('notifications.forceDeleteAll') }}" method="post" id="forceDeleteAllForm">
                     @csrf
                     @method('DELETE')
                 </form>
             </div>
-
             <div class="card-body">
                 <div class="list-group">
                 {{ $notifications->withQueryString()->links() }}
@@ -36,27 +34,20 @@
                             @endif
 
                             <p class="text-muted" style="font-size: 14px;">
-                                <strong>notification send: </strong><bdi>{{ $notification->created_at->diffForHumans() }}</bdi>
+                                <strong>notification Deleted at: </strong><bdi>{{ $notification->deleted_at->diffForHumans() }}</bdi>
                             </p>
-                            @if ($notification->restore)
-                            <p class="text-primary" style="font-size: 14px;">
-                                <strong>notification restore: </strong><bdi>{{ $notification->restore->diffForHumans() }}</bdi>
-                            </p>
-                            @endif
-                            @if ($notification->read_at)
-                            <p class="text-success" style="font-size: 14px;">
-                                <strong>notification read: </strong><bdi>{{ $notification->read_at->diffForHumans() }}</bdi>
-                            </p>
-                            @endif
-                            <a class="btn btn-outline-primary px-4 py-2" style="font-size: 16px;"
-                                href="{{ $notification->data['url'] }}?notification_id={{ $notification->id }}@if($notification->type == 'App\Notifications\Task\CommentAssigned')#comment-{{ $notification->data['id'] }}@endif">
-                                <i class="fas fa-eye"></i> <b>Show</b>
-                            </a>
-                            <form action="{{ route('notifications.delete', $notification->id) }}" method="POST" class="d-inline">
+                            <form action="{{ route('notifications.forceDelete', $notification->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-outline-danger px-4 py-2" style="font-size: 16px;">
                                     <i class="fas fa-trash"></i> <b>Delete</b>
+                                </button>
+                            </form>
+                            <form action="{{ route('notifications.restore', $notification->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit" class="btn btn-outline-info px-4 py-2" style="font-size: 16px;">
+                                    <i class="fas fa-rotate"></i> <b>Restore</b>
                                 </button>
                             </form>
                         </div>

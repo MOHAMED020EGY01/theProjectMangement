@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Crypt;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\DatabaseNotification as CustomDatabaseNotification;
 
 class User extends Authenticatable
 {
@@ -78,6 +79,15 @@ class User extends Authenticatable
         );
     }
 
+    public function profile()
+    {
+        return $this->hasOne(
+            Profile::class,
+            'user_id',
+            'id'
+        );
+    }
+
     //method Mutator
     public function setProviderTokenAttribute($value)
     {
@@ -88,5 +98,30 @@ class User extends Authenticatable
     public function getProviderTokenAttribute($value)
     {
         return Crypt::decrypt($value);
+    }
+
+
+
+    // استرجاع جميع الإشعارات
+    public function notifications()
+    {
+        return $this->morphMany(CustomDatabaseNotification::class, 'notifiable')
+            ->orderBy('created_at', 'desc');
+    }
+
+    // استرجاع الإشعارات المقروءة
+    public function readNotifications()
+    {
+        return $this->morphMany(CustomDatabaseNotification::class, 'notifiable')
+            ->whereNotNull('read_at')
+            ->orderBy('created_at', 'desc');
+    }
+
+    // استرجاع الإشعارات الغير مقروءة
+    public function unreadNotifications()
+    {
+        return $this->morphMany(CustomDatabaseNotification::class, 'notifiable')
+            ->whereNull('read_at')
+            ->orderBy('created_at', 'desc');
     }
 }

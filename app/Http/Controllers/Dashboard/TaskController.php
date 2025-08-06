@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\TaskRequest;
 use App\Models\Task;
-use App\Notifications\TaskAssigned;
+use App\Notifications\Task\TaskCreated;
+use App\Notifications\Task\TaskDeleted;
+use App\Notifications\Task\TaskUpdated;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -49,6 +51,7 @@ class TaskController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
     public function create($project_id){
+        
         if(!\App\Models\Project::where('id', $project_id)->exists()){
             return redirect()->route('dashboard.project.index')
             ->with('error', 'Project not found');
@@ -73,7 +76,7 @@ class TaskController extends Controller
             Task::create($request->validated());
 
             $user = \App\Models\User::find($request->user_id);
-            $user->notify(new TaskAssigned(Task::latest()->first()));
+            $user->notify(new TaskCreated(Task::latest()->first()));
 
             DB::commit();
             return redirect()
@@ -116,6 +119,9 @@ class TaskController extends Controller
             DB::beginTransaction();
             $task->update($request->validated());
             DB::commit();
+            $user = \App\Models\User::find($request->user_id);
+            $user->notify(new TaskUpdated(Task::latest()->first()));
+
             return redirect()
             ->route('dashboard.project.tasks.index', $task->project_id)
             ->with('info','Task updated successfully');
@@ -137,6 +143,8 @@ class TaskController extends Controller
         $task = self::findTaskByIdAndProject($project_id,$task_id);
         try {
             DB::beginTransaction();
+            $user = \App\Models\User::find($task->user_id);
+            $user->notify(new TaskDeleted($task));
             $task->delete();
             DB::commit();
             return redirect()

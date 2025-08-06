@@ -4,7 +4,7 @@
     </x-slot>
 
     <div class="container">
-    <form action="{{ route('dashboard.project.tasks.store', $project_id) }}" method="POST">
+    <form id="formStore" action="{{ route('dashboard.project.tasks.store', $project_id) }}" method="POST">
         @csrf
         <div class="row">
             <div class="col-md-6">
@@ -71,4 +71,8 @@
         <button type="submit" class="btn btn-outline-success w-100 shadow mt-3">Create Task</button>
     </form>
 </div>
+
+<x-slot name="scriptFooter">
+    <script src="{{ asset('dashboard/assets/js/StoreOrUpdate/Store.js') }}"></script>
+</x-slot>
 </x-dashboard.layout>

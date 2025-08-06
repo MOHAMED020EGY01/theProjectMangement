@@ -53,6 +53,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $projects->withQueryString()->links() }}
         </div>
     </div>
     <x-slot name="scriptFooter">

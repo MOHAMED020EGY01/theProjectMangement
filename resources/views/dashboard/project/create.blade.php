@@ -4,71 +4,69 @@
     </x-slot>
 
     <div class="container">
-    <form action="{{ route('dashboard.project.store') }}" method="POST">
-        @csrf
-        <div class="row">
-            <div class="col-md-6">
-                <x-form.input 
-                    label="name"
-                    name="name" 
-                    placeholder="Enter project name" 
-                    autofocus 
-                    required 
-                />
-            </div>
+        <form id="formStore" action="{{ route('dashboard.project.store') }}" method="POST">
+            @csrf
+            <div class="row">
+                <div class="col-md-6">
+                    <x-form.input
+                        label="name"
+                        name="name"
+                        placeholder="Enter project name"
+                        autofocus
+                         />
+                </div>
 
-            <div class="col-md-6">
-                <x-form.select 
-                    label="status" 
-                    name="status" 
-                    :options="$status"
-                    placeholder="Enter project status" 
-                    required 
-                />
-            </div>
+                <div class="col-md-6">
+                    <x-form.select
+                        label="status"
+                        name="status"
+                        :options="$status"
+                        placeholder="Enter project status"
+                         />
+                </div>
 
-            <div class="col-md-4">
-                <x-form.select 
-                    label="user" 
-                    name="user_id" 
-                    :options="$users"
-                    placeholder="Enter project user" 
-                    required 
-                />
-            </div>
+                <div class="col-md-4">
+                    <x-form.select
+                        label="user"
+                        name="user_id"
+                        :options="$users"
+                        placeholder="Enter project user"
+                         />
+                </div>
 
-            <div class="col-md-4">
-                <x-form.select 
-                    label="company" 
-                    name="company_id" 
-                    :options="$companies"
-                    placeholder="Enter project company" 
-                    required 
-                />
-            </div>
+                <div class="col-md-4">
+                    <x-form.select
+                        label="company"
+                        name="company_id"
+                        :options="$companies"
+                        placeholder="Enter project company"
+                         />
+                </div>
 
 
-            <div class="col-md-4">
-                <x-form.input 
-                    type="date"
-                    label="deadline" 
-                    name="deadline" 
-                    placeholder="Enter project deadline"
-                    :value="now()->format('Y-m-d')" 
-                    required 
-                />
-            </div>
+                <div class="col-md-4">
+                    <x-form.input
+                        type="date"
+                        label="deadline"
+                        name="deadline"
+                        placeholder="Enter project deadline"
+                        :value="now()->format('Y-m-d')"
+                        required />
+                </div>
 
-            <div class="col-md-12">
-                <x-form.textarea 
-                    label="description" 
-                    name="description" 
-                    placeholder="Enter project description" 
-                    required 
-                />
+                <div class="col-md-12">
+                    <x-form.textarea
+                        label="description"
+                        name="description"
+                        placeholder="Enter project description"
+                        required />
+                </div>
             </div>
-        </div>
-        <button type="submit" class="btn btn-outline-success w-100 shadow mt-3">Create Project</button>
-    </form>
-</div>
+            <button type="submit" class="btn btn-outline-success w-100 shadow mt-3">Create Project</button>
+        </form>
+    </div>
+
+    <x-slot name="scriptFooter">
+        <script src="{{ asset('dashboard/assets/js/StoreOrUpdate/Store.js') }}"></script>
+    </x-slot>
 </x-dashboard.layout>

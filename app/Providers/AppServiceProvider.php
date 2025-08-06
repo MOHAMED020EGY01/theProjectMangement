@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Providers;
-
+use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
-
+use App\Models\DatabaseNotification as CustomDatabaseNotification;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -12,7 +12,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        
     }
 
     /**
