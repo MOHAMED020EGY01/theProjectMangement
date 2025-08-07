@@ -2,7 +2,7 @@
     <x-slot name="title">
         Profile
     </x-slot>
-    <x-flash-message/>
+    <x-flash-message />
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -10,9 +10,13 @@
                     <h5 class="card-title">Profile</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                 </div>
+               
             </div>
         </div>
     </div>
+     <img src="{{ asset('storage/'. optional($profile)->image) ?? 'https://via.placeholder.com/150' }}" alt="Profile Image"
+                    class="m-3 img-fluid rounded-circle border border-3 border-primary"
+                    style="width: 150px; height: 150px; object-fit: cover; ">
     <form action="{{ route('profile.update', $user_id) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
@@ -23,8 +27,8 @@
                     label="Name"
                     type="text"
                     value="{{ $profile->name ?? '' }}"
-                    required 
-                    placeholder="Enter Name"/>
+                    required
+                    placeholder="Enter Name" />
             </div>
 
             <div class="col-md-6">
@@ -33,8 +37,8 @@
                     label="Phone"
                     type="tel"
                     value="{{ $profile->phone ?? '' }}"
-                    required 
-                    placeholder="Enter Phone"/>
+                    required
+                    placeholder="Enter Phone" />
             </div>
             <div class="col-md-8">
                 <x-form.input
@@ -42,8 +46,8 @@
                     label="Address"
                     type="text"
                     value="{{ $profile->address ?? '' }}"
-                    required 
-                    placeholder="Enter Address"/>
+                    required
+                    placeholder="Enter Address" />
             </div>
             <div class="col-md-4">
                 <x-form.input
@@ -51,8 +55,8 @@
                     label="City"
                     type="text"
                     value="{{ $profile->city ?? '' }}"
-                    required 
-                    placeholder="Enter City"/>
+                    required
+                    placeholder="Enter City" />
             </div>
             <div class="col-md-4">
                 <x-form.input
@@ -60,8 +64,8 @@
                     label="State"
                     type="text"
                     value="{{ $profile->state ?? '' }}"
-                    required 
-                    placeholder="Enter state"/>
+                    required
+                    placeholder="Enter state" />
             </div>
 
             <div class="col-md-4">
@@ -70,8 +74,8 @@
                     label="zip code"
                     type="text"
                     value="{{ $profile->zip ?? '' }}"
-                    required 
-                    placeholder="Enter zip code"/>
+                    required
+                    placeholder="Enter zip code" />
             </div>
             <div class="col-md-4">
                 <x-form.select
@@ -86,9 +90,9 @@
                     name="image"
                     label="Image"
                     type="file"
-                    :value="$profile->image ?? ''"
-                    required />
+                    />
             </div>
+
         </div>
         <button type="submit" class="btn btn-outline-primary w-100 shadow mt-3">Update Profile</button>
     </form>

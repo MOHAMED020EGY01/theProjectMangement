@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Providers;
+
+use App\Actions\StorageHelper;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
@@ -12,7 +14,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        
+        $this->app->bind('storagehelper', function () {
+            return new StorageHelper();
+        });
     }
 
     /**

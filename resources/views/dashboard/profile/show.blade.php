@@ -18,15 +18,14 @@
     <div class="container py-5">
         <div class="card shadow-lg border-0 rounded-4 p-4" style="max-width: 700px; margin: auto;">
             <div class="row g-4 align-items-center">
-                <!-- صورة البروفايل -->
                 <div class="col-md-4 text-center">
-                    <img src="{{ asset('dashboard/assets/img/' . $profile->image) ?? 'https://via.placeholder.com/150' }}" 
+                    <img src="{{ asset('storage/' . optional($profile)->image) ?? 'https://via.placeholder.com/150' }}" 
                          alt="Profile Image" 
                          class="img-fluid rounded-circle border border-3 border-primary" 
                          style="width: 150px; height: 150px; object-fit: cover;">
                 </div>
 
-                <!-- بيانات البروفايل -->
+
                 <div class="col-md-8">
                     <h3 class="fw-bold mb-3">{{ $profile->user->name ?? 'N/A' }}</h3>
                     <ul class="list-unstyled mb-0">
