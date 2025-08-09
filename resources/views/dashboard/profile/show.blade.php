@@ -19,7 +19,7 @@
         <div class="card shadow-lg border-0 rounded-4 p-4" style="max-width: 700px; margin: auto;">
             <div class="row g-4 align-items-center">
                 <div class="col-md-4 text-center">
-                    <img src="{{ asset('storage/' . optional($profile)->image) ?? 'https://via.placeholder.com/150' }}" 
+                    <img src="{{ $profile?->image_profile ?? asset('defaultImage/profile/default.jpg') }}" 
                          alt="Profile Image" 
                          class="img-fluid rounded-circle border border-3 border-primary" 
                          style="width: 150px; height: 150px; object-fit: cover;">

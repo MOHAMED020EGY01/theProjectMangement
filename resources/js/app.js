@@ -44,3 +44,16 @@ window.Echo.private(`App.Models.User.${userId}`).notification((data) => {
         `);
     }
 });
+
+window.Echo.join('online-users')
+    .here(users => {
+        users.forEach(user => {
+            $(`#user-${user.id}`).text('Online');
+        });
+    })
+    .joining(user => {
+        $(`#user-${user.id}`).text('Online');
+    })
+    .leaving(user => {
+        $(`#user-${user.id}`).text('Offline');
+    });

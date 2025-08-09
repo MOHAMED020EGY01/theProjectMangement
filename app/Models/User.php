@@ -31,6 +31,7 @@ class User extends Authenticatable
         'provider_token',
     ];
 
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -50,6 +51,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'lastActive'=> 'datetime',
     ];
 
     public function company()
@@ -123,5 +125,9 @@ class User extends Authenticatable
         return $this->morphMany(CustomDatabaseNotification::class, 'notifiable')
             ->whereNull('read_at')
             ->orderBy('created_at', 'desc');
+    }
+
+    public function isOnline(){
+        return $this->lastActive && $this->lastActive->gt(now()->subMinutes(2));
     }
 }

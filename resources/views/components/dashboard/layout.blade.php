@@ -32,6 +32,11 @@
     </script>
     @vite('resources/js/app.js')
 
+
+    <!-- tags -->
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css">
+
     <!-- Chart.js -->
     {{ $scriptHead ?? '' }}
 </head>
@@ -141,8 +146,9 @@
 
                 {{-- قائمة المستخدم --}}
                 <div class="dropdown">
-                    <button class="btn btn-light border rounded-pill px-3 d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-user-circle fa-lg text-primary"></i>
+                    <button class="position-relative btn btn-light border rounded-pill px-3 d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img width="25px" height="25px" class="rounded-circle" src="{{ Auth::user()->profile->image_profile ?? asset('defaultImage/profile/default.jpg') }}" alt="logo">
+                        <span class="rounded-pil" style="width: 10px; height: 10px; border-radius: 50%; background-color: green; position: absolute; top: 27px; left: 30px;"></span>
                         <span class="fw-semibold">{{ Auth::user()->name }}</span>
                     </button>
 

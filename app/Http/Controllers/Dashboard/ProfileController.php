@@ -6,9 +6,12 @@ use App\Facades\StorageHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\ProfileRequest;
 use App\Models\Profile;
+use App\Models\Tag;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Symfony\Component\Intl\Countries;
 
 class ProfileController extends Controller
@@ -20,8 +23,8 @@ class ProfileController extends Controller
 
     public function index()
     {
-        
-        
+
+
         $user = Auth::user();
 
         $profile = $user->profile ?? new Profile();
@@ -43,30 +46,45 @@ class ProfileController extends Controller
      */
     public function update(ProfileRequest $request, $id)
     {
+        DB::beginTransaction();
         try {
             $user_id = Auth::id();
             if ($id != $user_id) {
                 return redirect()->back()->with('error', 'Unauthorized');
             }
 
-            DB::beginTransaction();
 
             $data = $request->validated();
+            $data['user_id'] = $user_id;
             $profile = Profile::where('user_id', $id)->first();
 
-            $data['image'] = StorageHelper::
-            storeFile($request->file('image'), 
-            $profile,
-            $request->hasFile('image'),
-            'public',
-            'image',
-            'image');   
+            // image uplode
+            if ($request->hasFile('image')) {
+                $data['image'] = StorageHelper::storeFile($request->file('image'), $profile, $request->hasFile('image'), 'public', 'image', 'image');
+            }
 
-
-            Profile::updateOrCreate(
-                ['user_id' => $user_id],
+            $profile = Profile::updateOrCreate(
+                ['user_id' => $id],
                 $data
             );
+
+            
+            $tags = $this->testTags($request);
+            if (empty($tags)) {
+                return redirect()->back()->with('error', 'Tags Error');
+            }
+            $tags_id = [];
+            foreach ($tags as $tag) {
+                $tag = Tag::firstOrCreate([
+                    'slug' => Str::slug($tag),
+    
+                ], [
+                    'name' => $tag,
+                ]);
+    
+                $tags_id[] = $tag->id;
+            }
+            $profile->tags()->sync($tags_id);
 
             DB::commit();
 
@@ -83,7 +101,28 @@ class ProfileController extends Controller
         }
     }
 
+    /**
+     * Summary of testTags
+     * @param \App\Http\Requests\Dashboard\ProfileRequest $request
+     * @return array|\Illuminate\Http\RedirectResponse
+     */
+    public function testTags(ProfileRequest $request)
+    {
+        try {
+            $tags = json_decode($request->input('tags', []), true) ?? [];
+            $tags = array_map(fn($t) => $t['value'] ?? null, $tags);
+            return array_values($tags);
+        } catch (\Exception $e) {
+            Log::error('Tags Error ' . $e->getMessage());
+            return [];
+        }
+    }
 
+    /**
+     * Summary of show
+     * @param mixed $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function show($id)
     {
         return view('dashboard.profile.show', [

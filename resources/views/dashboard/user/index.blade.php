@@ -16,6 +16,8 @@
                             <th>Name</th>
                             <th>Username</th>
                             <th>Email</th>
+                            <th>Last Active</th>
+                            <th>Status</th>
                             <th>Created</th>
                         </tr>
                     </thead>
@@ -27,6 +29,10 @@
                             <td> <a style="text-decoration-line: none;" href="{{ route('profile.show', $user->id) }}">{{ $user->name }}</a></td>
                             <td>{{ $user->username }}</td>
                             <td>{{ $user->email }}</td>
+                            <td id="user-{{ $user->id }}">
+                            {{ $user->isOnline() ? 'Online' : 'Offline' }}
+                        </td>
+                            <td>{{ $user->lastActive?->diffForHumans() }}</td>
                             <td>{{ $user->created_at->diffForHumans() }}</td>
 
                         </tr>

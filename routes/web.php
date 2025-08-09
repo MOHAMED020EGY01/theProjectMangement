@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/dashboards');
 
-
-require __DIR__.'/dashboard/dashboard.php';
-require __DIR__.'/auth/socialLogin.php';
+Route::middleware([
+    'lastActive',
+])->group(function () {
+    require __DIR__.'/dashboard/dashboard.php';
+    require __DIR__.'/auth/socialLogin.php';
+});
