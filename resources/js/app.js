@@ -2,6 +2,12 @@ import "./bootstrap";
 import {broadcastAlertProjectDeleted,} from "./broadcastAlert/broadcastProject";
 import {broadcastAlertTaskDeleted,} from "./broadcastAlert/broadcastTask";
 import {broadcastAlertTaskCreated,} from "./broadcastAlert/broadcastTask";
+import {chatBroadCast,} from "./ChatBroadCast/ChatBroadCast";
+import {statusOnline,} from "./statusOnline";
+
+chatBroadCast();
+statusOnline();
+
 window.Echo.private(`App.Models.User.${userId}`).notification((data) => {
     console.log("broadcastAlertProjectDeleted in App");
     if(data.type === "App\\Notifications\\Project\\ProjectDeleted"){
@@ -45,15 +51,3 @@ window.Echo.private(`App.Models.User.${userId}`).notification((data) => {
     }
 });
 
-window.Echo.join('online-users')
-    .here(users => {
-        users.forEach(user => {
-            $(`#user-${user.id}`).text('Online');
-        });
-    })
-    .joining(user => {
-        $(`#user-${user.id}`).text('Online');
-    })
-    .leaving(user => {
-        $(`#user-${user.id}`).text('Offline');
-    });

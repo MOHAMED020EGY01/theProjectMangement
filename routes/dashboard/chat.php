@@ -10,7 +10,7 @@ Route::group([
         'middleware' => 'auth'
     ],function () {
         Route::get('/chat', [ChatController::class, 'index'])->name('index');
-        Route::get('/chat/messages/{user}', [ChatController::class, 'fetchMessages'])->name('messages');
+        Route::get('/chat/messages/{user}/show', [ChatController::class, 'show'])->name('show');
         Route::post('/chat/send/{user}', [ChatController::class, 'sendMessage'])->name('send');
     });
 });

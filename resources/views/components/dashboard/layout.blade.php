@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="user-id" content="{{ auth()->id() }}">
+    <!-- csrf token in Chat-->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{config('app.name')}}</title>
 
     <!---------------- CSS Link  --------------->
@@ -148,7 +150,9 @@
                 <div class="dropdown">
                     <button class="position-relative btn btn-light border rounded-pill px-3 d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <img width="25px" height="25px" class="rounded-circle" src="{{ Auth::user()->profile->image_profile ?? asset('defaultImage/profile/default.jpg') }}" alt="logo">
-                        <span class="rounded-pil" style="width: 10px; height: 10px; border-radius: 50%; background-color: green; position: absolute; top: 27px; left: 30px;"></span>
+                        
+                        <span id="userOnline" class="rounded-pill" style="width: 10px; height: 10px; border-radius: 50%; background-color: green; position: absolute; top: 27px; left: 30px;"></span>
+
                         <span class="fw-semibold">{{ Auth::user()->name }}</span>
                     </button>
 

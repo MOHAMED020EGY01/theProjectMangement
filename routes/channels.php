@@ -21,3 +21,8 @@ Broadcast::channel('online-users', function ($user) {
     return ['id' => $user->id, 'name' => $user->name];
 });
 
+Broadcast::channel('chat.{senderId}.{receiverId}', function ($user, $senderId, $receiverId) {
+    return in_array($user->id, [(int) $senderId, (int) $receiverId]);
+});
+
+
